@@ -1,0 +1,140 @@
+/* jQuery Countdown styles 2.0.0. */
+.countdown-rtl {
+	direction: rtl;
+}
+.countdown-holding span {
+	color: #888;
+}
+.countdown-row {
+	clear: both;
+	width: 100%;
+	padding: 0px 2px;
+	text-align: center;
+}
+.countdown li{
+	display:inline-flex;
+}
+.countdown .time{
+	font-size: 13px;
+    padding-top: 2px;
+    font-weight: 300;
+}
+@media (max-width:991px){
+	#launch_date1 .countdown li{
+		margin:0;
+	}
+	#launch_date1 .countdown .number{
+		font-size: 1rem !important;
+	}
+	.is-countdown{
+		margin-top:0px;
+	}
+	#launch_date1 .countdown .time{
+		font-size: 10px !important;
+		padding-top: 5px !important;
+		margin-bottom: 1rem !important;
+	}
+	#launch_date1 .countdown .number-font.display-4{
+		font-size: 2rem !important;
+		margin-bottom: 0 !important;
+	}
+	#launch_date1 h5{
+		margin-top: 10px !important;
+	}
+}
+@media (min-width:992px){
+	.countdown li{
+		margin:10px 0px 5px 0px;
+	}
+}
+#launch_date1 .countdown .number {
+    font-size: 1.83rem;
+    font-weight: bold;
+    padding: 8px 20px;
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    color: #15162b;
+    border-radius: 5px;
+    background: #fff;
+    display: block;
+	margin-top:1.8rem;
+}
+#launch_date1 .countdown .time {
+    font-size: 14px;
+    padding-top: 10px;
+    font-weight: 400;
+    margin-bottom:1.5rem;
+    text-transform: uppercase;
+}
+#launch_date1 .countdown li{
+	position:relative;
+}
+#launch_date1 .countdown li:last-child:before{
+	display:none;
+}
+#launch_date1 .countdown .colone{
+	color:#fff !important;
+	font-size:30px;
+	margin: 15px;
+	vertical-align: middle;
+    text-align: center;
+    margin-top: 30px;
+}
+
+#launch_date .countdown li{
+	display:inline-block;
+	font-size: 1.5rem;
+	font-weight:500;
+	font-weight: bold;
+	padding: 8px 20px;
+	border-radius:5px;
+	text-align:center;
+	margin:0 auto;
+	position:relative;
+	overflow:hidden;
+	background:#7d61f3;
+	z-index:1;
+	color:#fff;
+}
+#launch_date .countdown .time{
+	font-size: 12px;
+    padding-top: 0px;
+    font-weight: 300;
+	display:block;
+}
+@media (max-width:992px){
+	#launch_date .countdown li{
+		margin:20px 10px 10px 10px;
+	}
+}
+@media (min-width:992px){
+	#launch_date .countdown li{
+		margin:10px 10px 20px 10px;
+	}
+	.construction{
+		width:55% !important;
+	}
+}
+.construction{
+	color: #212844;
+	height:100vh;
+}
+.construction .under-form{
+	position:relative;
+}
+.construction .under-form i{
+	position: absolute;
+    right: 15px;
+    bottom: 13px;
+	color:#9e9fa1;
+}
+.construction .form-control{
+	border-radius:5px;
+}
+.construction .btn{
+	border-radius: 5px;
+	padding: 0.45rem 1.75rem;
+}

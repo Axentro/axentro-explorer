@@ -1,0 +1,13 @@
+{
+  "name": "axentro-explorer",
+  "application": {
+    "head": "assets/head.html",
+    "title": "axentro-explorer"
+  },
+  "source-directories": [
+    "source"
+  ],
+  "test-directories": [
+    "tests"
+  ]
+}
