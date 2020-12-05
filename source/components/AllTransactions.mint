@@ -1,7 +1,10 @@
 component AllTransactions {
 
+connect Application exposing { blockId }
 
-  state transactions : Maybe(Array(TransactionsResponse)) = Maybe.nothing()
+  property source : TransactionState
+  
+  state transactions : Maybe(PaginatedTransactions) = Maybe.nothing()
   state error : String = ""
 
   state selectedPerPage : String = "10"
@@ -13,10 +16,10 @@ component AllTransactions {
       }
   }
 
-   fun getTransactions : Promise(Never, Void) {
-    sequence {
+   fun getAllTransactions(page : String, perPage : String) : Promise(Never, Void) {
+     sequence {
     response = 
-     Http.get("http://localhost:3000/api/v1/transactions?page=" + page + "&per_page=" + perPage + "&sort_field=time")
+     Http.get(Network.baseUrl() + "/api/v1/transactions?page=" + page + "&per_page=" + perPage + "&sort_field=time")
      |> Http.send()
 
      json = 
@@ -30,6 +33,40 @@ component AllTransactions {
     } catch {
       next { error = "Could not fetch transactions"}
     }
+   }
+
+   fun getBlockTransactions(page : String, perPage : String) : Promise(Never, Void) {
+     sequence {
+    response = 
+     Http.get(Network.baseUrl() + "/api/v1/block/" + blockId + "/transactions?page=" + page + "&per_page=" + perPage + "&sort_field=time")
+     |> Http.send()
+
+     json = 
+      Json.parse(response.body)
+      |> Maybe.toResult("Json parsing error with transactions")
+
+      Debug.log(json)
+
+      result = 
+        decode json as ApiResponseBlockTransactions
+
+	   txns = result.result.transactions
+	             |> Array.map((t : ApiTransaction) { { transaction = t, confirmations = result.result.confirmations, blockId = result.result.blockId } })
+	             
+      modified = { transactions = txns, pagination = result.result.pagination }
+
+      next { transactions = Maybe.just(modified) }
+    } catch {
+      next { error = "Could not fetch transactions"}
+    }
+   }
+
+   fun getTransactions : Promise(Never, Void) {
+    case (source) {
+		TransactionState::All => getAllTransactions(page, perPage)
+		TransactionState::Address => getAllTransactions(page, perPage)
+		TransactionState::Block => getBlockTransactions(page, perPage)
+	}
   } where {
 	  perPage = selectedPerPage
 	  page = Number.toString(currentPage)
@@ -179,7 +216,7 @@ component AllTransactions {
 									</div>
 									</div>
    } where {
-      recentTransactions = (transactions |> Maybe.withDefault([] of TransactionsResponse))
+      recentTransactions = (transactions |> Maybe.map(.transactions) |> Maybe.withDefault([] of TransactionsResponse))
 
   }
 

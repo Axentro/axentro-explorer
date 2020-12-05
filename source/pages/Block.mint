@@ -2,7 +2,7 @@ component Block {
 
  connect Application exposing { blockId }
 
-  state blocks : Maybe(Array(BlocksResponse)) = Maybe.nothing()
+  state blocks : Maybe(Array(ApiBlock)) = Maybe.nothing()
   state error : String = ""
 
   fun render : Html {
@@ -20,7 +20,7 @@ component Block {
    fun getBlock : Promise(Never, Void) {
       sequence {
           response = 
-           Http.get("http://localhost:3000/api/v1/block/" + blockId)
+           Http.get(Network.baseUrl() + "/api/v1/block/" + blockId)
            |> Http.send()
     
           json = 
@@ -28,7 +28,7 @@ component Block {
             |> Maybe.toResult("Json parsing error with transaction")
 
           result = 
-            decode json as ApiResponseBlock
+            decode json as ApiResponseSingleBlock
 
           next { blocks = Maybe.just([result.block.block]) }   
       } catch {
@@ -70,7 +70,7 @@ component Block {
 
 				</div>
   } where {
-      recentBlocks = (blocks |> Maybe.withDefault([] of BlocksResponse))
+      recentBlocks = (blocks |> Maybe.withDefault([] of ApiBlock))
   }
 }
 

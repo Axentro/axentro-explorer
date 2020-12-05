@@ -1,8 +1,8 @@
 component RecentBlocks {
 
-property blocks : Array(BlocksResponse)
+property blocks : Array(ApiBlock)
 
-  fun renderBodyRow(row : BlocksResponse) : Html {
+  fun renderBodyRow(row : ApiBlock) : Html {
 	  <tr>
 	  <td class="text-muted"><{renderBlockId(row)}></td>
 														<td class="text-muted"><{renderBlockKind(row)}></td>
@@ -10,7 +10,7 @@ property blocks : Array(BlocksResponse)
 	  </tr>
   }
 
-  fun renderBlockKind(row : BlocksResponse) : Html {
+  fun renderBlockKind(row : ApiBlock) : Html {
 	  if (row.kind == "SLOW") {
         <h6 class="tag tag-teal">"SLOW"</h6>
 	  } else {
@@ -19,7 +19,7 @@ property blocks : Array(BlocksResponse)
   }
 
 
- fun renderAmount(row : BlocksResponse) : Html {
+ fun renderAmount(row : ApiBlock) : Html {
 	<h6 class="tag tag-blue"><{amount}> <span class="tag-addon tag-azure">"  AXNT"</span></h6>   
    } where {
 	   amount = UiHelper.displayAmount(
@@ -29,7 +29,7 @@ property blocks : Array(BlocksResponse)
 	   |> Array.sum)
    }
 
-   fun renderBlockId(row : BlocksResponse) : Html {
+   fun renderBlockId(row : ApiBlock) : Html {
 	   <div>
 	   <a href={"/blocks/" + blockId}><{ blockId }></a>
 	   <div><{ calculateTimeAgo(row) }></div>
@@ -38,7 +38,7 @@ property blocks : Array(BlocksResponse)
 	   blockId = Number.toString(row.index)
    }
 
-   fun calculateTimeAgo(row : BlocksResponse) : String {
+   fun calculateTimeAgo(row : ApiBlock) : String {
 	   UiHelper.timeAgo(row.timestamp)
    }
 

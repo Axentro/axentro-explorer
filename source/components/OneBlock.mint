@@ -1,6 +1,6 @@
 component OneBlock {
 
-   property blocks : Array(BlocksResponse)
+   property blocks : Array(ApiBlock)
 
     fun render : Array(Html) {
         for (block of blocks){
@@ -8,7 +8,7 @@ component OneBlock {
         }
     }
 
-     fun renderBlockKind(row : BlocksResponse) : Html {
+     fun renderBlockKind(row : ApiBlock) : Html {
 	  if (row.kind == "SLOW") {
         <h6 class="tag tag-teal">"SLOW"</h6>
 	  } else {
@@ -16,14 +16,14 @@ component OneBlock {
 	  }
   }
 
- fun renderTransactionCount(row : BlocksResponse) : Html {
+ fun renderTransactionCount(row : ApiBlock) : Html {
    <a href={"/blocks/" + blockId + "/transactions"}><{count " transactions in this block"}></a>
  } where {
   blockId = Number.toString(row.index)
   count = Number.toString(row.transactions |> Array.size)
  }
 
- fun renderAmount(row : BlocksResponse) : Html {
+ fun renderAmount(row : ApiBlock) : Html {
 	<h6 class="tag tag-blue"><{amount}> <span class="tag-addon tag-azure">"  AXNT"</span></h6>   
    } where {
 	   amount = UiHelper.displayAmount(
@@ -33,15 +33,15 @@ component OneBlock {
 	   |> Array.sum)
    }
 
-    fun renderAge(row : BlocksResponse) : String {
+    fun renderAge(row : ApiBlock) : String {
      UiHelper.timeAgo(row.timestamp)
    }
 
-   fun renderDate(row : BlocksResponse) : String {
+   fun renderDate(row : ApiBlock) : String {
        UiHelper.dateFrom(row.timestamp)
    }
 
-    fun renderBlock(block : BlocksResponse) : Html {
+    fun renderBlock(block : ApiBlock) : Html {
         <div class="card overflow-hidden">
 									<div class="card-header">
 									<h3 class="card-title"><{"Block: " + blockId }></h3> 

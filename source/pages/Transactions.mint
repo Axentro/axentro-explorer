@@ -33,7 +33,7 @@ component Transactions {
 				
 						<div class="row row-deck">
 							<div class="col-lg-12 col-12">
-								<AllTransactions/>
+								<AllTransactions source={TransactionState::All}/>
 							</div>
                     
 						</div>

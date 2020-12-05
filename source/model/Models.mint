@@ -21,7 +21,17 @@ record Stats {
 /* Transactions */
 record ApiResponseTransactions {
     status : String,
-    transactions : Array(TransactionsResponse) using "result"
+    transactions : PaginatedTransactions using "result"
+}
+
+record PaginatedTransactions {
+  transactions : Array(TransactionsResponse),
+  pagination : TransactionPagination
+}
+
+record TransactionPagination {
+  page : Number,
+  totalCount : Number using "total_count"
 }
 
 record ApiResponseTransaction {
@@ -43,7 +53,8 @@ record ApiResponseBlockTransactions {
 record BlockTransactionsResponse {
   transactions : Array(ApiTransaction),
   confirmations : Number, 
-  blockId : Number using "block_id"
+  blockId : Number using "block_id",
+  pagination : BlockPagination
 }
 
 record TransactionsResponse {
@@ -80,7 +91,7 @@ record ApiRecipient {
 /* Blocks */
 record ApiResponseBlocks {
   status : String, 
-  blocks : Array(BlocksResponse) using "result"
+  blocks : BlocksResponse using "result"
 }
 
 record ApiResponseBlock {
@@ -88,12 +99,31 @@ record ApiResponseBlock {
   block : ApiBlockResponse using "result"
 }
 
+record ApiResponseSingleBlock {
+  status : String,
+  block : SingleBlockResponse using "result"
+}
+
+record SingleBlockResponse {
+  block : ApiBlock
+}
+
 record ApiBlockResponse {
   block : BlocksResponse  
 }
 
 record BlocksResponse {
-  index : Number, 
+ data : Array(ApiBlock),
+ pagination : BlockPagination
+}
+
+record BlockPagination {
+  page : Number,
+  totalCount : Number using "total_count"
+}
+
+record ApiBlock {
+ index : Number, 
   transactions : Array(ApiTransaction),
   nonce : Maybe(String),
   previousHash : String using "prev_hash",

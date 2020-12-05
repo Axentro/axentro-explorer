@@ -19,6 +19,10 @@ module UiHelper {
       `new Date(#{millis}).toString()`
   }
 
+  fun roundUp(value : Number) : Number {
+    `Math.ceil(#{value})`
+  }
+
  fun selectNameOptions (selectedName : String, options : Array(String)) : Array(Html) {
     options
     |> Array.map(

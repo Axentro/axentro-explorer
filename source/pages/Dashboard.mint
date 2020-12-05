@@ -2,7 +2,7 @@ component Dashboard {
 
   state stats : Maybe(Stats) = Maybe.nothing()
   state transactions : Maybe(Array(TransactionsResponse)) = Maybe.nothing()
-  state blocks : Maybe(Array(BlocksResponse)) = Maybe.nothing()
+  state blocks : Maybe(Array(ApiBlock)) = Maybe.nothing()
   state error : String = ""
 
   fun render : Html {
@@ -22,7 +22,7 @@ component Dashboard {
   fun getStats : Promise(Never, Void) {
     sequence {
     response = 
-     Http.get("http://localhost:3000/api/v1/blockchain/size")
+     Http.get(Network.baseUrl() + "/api/v1/blockchain/size")
      |> Http.send()
 
      json = 
@@ -41,7 +41,7 @@ component Dashboard {
    fun getTransactions : Promise(Never, Void) {
     sequence {
     response = 
-     Http.get("http://localhost:3000/api/v1/transactions?per_page=10&sort_field=time")
+     Http.get(Network.baseUrl() +  "/api/v1/transactions?per_page=10&sort_field=time")
      |> Http.send()
 
      json = 
@@ -51,7 +51,7 @@ component Dashboard {
       result = 
         decode json as ApiResponseTransactions
 
-      next { transactions = Maybe.just(result.transactions) }
+      next { transactions = Maybe.just(result.transactions.transactions) }
     } catch {
       next { error = "Could not fetch transactions"}
     }
@@ -60,7 +60,7 @@ component Dashboard {
   fun getBlocks : Promise(Never, Void) {
       sequence {
           response = 
-           Http.get("http://localhost:3000/api/v1/blockchain?per_page=13&sort_field=time")
+           Http.get(Network.baseUrl() + "/api/v1/blockchain?per_page=13&sort_field=time")
            |> Http.send()
     
           json = 
@@ -70,7 +70,7 @@ component Dashboard {
           result = 
             decode json as ApiResponseBlocks
 
-          next { blocks = Maybe.just(result.blocks) }   
+          next { blocks = Maybe.just(result.blocks.data) }   
       } catch {
           next { error = "Could not fetch blocks"}
       }
@@ -157,7 +157,7 @@ component Dashboard {
 				</div>
   } where {
       recentTransactions = (transactions |> Maybe.withDefault([] of TransactionsResponse))
-      recentBlocks = (blocks |> Maybe.withDefault([] of BlocksResponse))
+      recentBlocks = (blocks |> Maybe.withDefault([] of ApiBlock))
 
   }
 }

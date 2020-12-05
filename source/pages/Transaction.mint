@@ -20,7 +20,7 @@ component Transaction {
       fun getTransaction : Promise(Never, Void) {
          sequence {
              response = 
-              Http.get("http://localhost:3000/api/v1/transaction/" + transactionId)
+              Http.get(Network.baseUrl() + "/api/v1/transaction/" + transactionId)
               |> Http.send()
        
              json = 
