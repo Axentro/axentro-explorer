@@ -79,11 +79,7 @@ component AllBlocks {
 	   blockId = Number.toString(row.index)
    }
 
-   get perPageOptions : Array(String) {
-	   ["10","25","50","100"]
-   }
-
-    fun onPerPage (event : Html.Event) {
+     fun onPerPage (event : Html.Event) {
 		sequence {
            next { selectedPerPage = Dom.getValue(event.target) }
 		   getBlocks()
@@ -104,57 +100,7 @@ component AllBlocks {
 		}
    }
 
-   fun pagination(paginationData : BlockPagination) : Html {
-	   <div class="col">
-	   <div class="ml-2 float-right">
-        <select
-          onChange={onPerPage}
-          class="form-control"
-          id="perPage">
-
-          <{ UiHelper.selectNameOptions(selectedPerPage, perPageOptions) }>
-
-        </select>
-		</div>
-		<div class="float-left">
-       <div class="mt-1 btn-list">
-	     <span class="mr-5 tag tag-indigo"><{"Page " + page + " of " + total}></span>
-	    <{ showPaginationPrev(pageNumber) }>
-	    <{ showPaginationNext(pageNumber, totalCountNumber) }>
-	   </div>	    
-	   </div>
-	   </div>
-   } where {
-     pageNumber = paginationData.page + 1
-	   page = Number.toString(pageNumber)
-     selectedPerPageNumber = Number.fromString(selectedPerPage) |> Maybe.withDefault(0)
-     totalCountNumber = (paginationData.totalCount / selectedPerPageNumber)
-     total = Number.toString(UiHelper.roundUp(totalCountNumber))
-   }
-
-   fun showPaginationPrev(pageNumber : Number) : Html {
-     if (pageNumber <= 1) {
-       <button disabled={true} class="btn btn-outline-primary disabled">"Prev"</button>  
-     } else {
-       <button onClick={onPrevPage} class="btn btn-outline-primary">"Prev"</button>
-     }
-   }
-
-    fun showPaginationNext(pageNumber : Number, totalCount : Number) : Html {
-     if (pageNumber >= totalCount) {
-       <button disabled={true} class="btn btn-outline-primary disabled">"Next"</button>  
-     } else {
-        <button onClick={onNextPage} class="btn btn-outline-primary">"Next"</button>
-     }
-   }
-
-  property paginationKind : PaginationKind
-   property selectedPerPage : String
-   property onPerPage : Function(Html.Event, Promise(Never,Void))
-   property onPrevPage : Function(Html.Event, Promise(Never,Void))
-   property onNextPage : Function(Html.Event, Promise(Never,Void))
-
-   fun render : Html {
+  fun render : Html {
        <div class="card overflow-hidden">
 									<div class="card-header">
 										<div class="col-md-12">
@@ -162,7 +108,7 @@ component AllBlocks {
 											<h3 class="card-title">"Blocks"</h3> 
 									    </div>
 										<div class="float-right">		
-											<{ <Pagination paginationKind={paginationData} />}>
+											<Pagination paginationKind={PaginationKind::Block(paginationData)} selectedPerPage={selectedPerPage} onPerPage={onPerPage} onPrevPage={onPrevPage} onNextPage={onNextPage}/>
 										</div>
 										</div>
 									</div>

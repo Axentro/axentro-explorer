@@ -129,35 +129,7 @@ connect Application exposing { blockId }
    }
 
 
- fun pagination : Html {
-	   <div class="col">
-	   <div class="ml-2 float-right">
-        <select
-          onChange={onPerPage}
-          class="form-control"
-          id="perPage">
-
-          <{ UiHelper.selectNameOptions(selectedPerPage, perPageOptions) }>
-
-        </select>
-		</div>
-		<div class="float-left">
-       <div class="mt-1 btn-list">
-	     <span class="mr-5 tag tag-indigo"><{"Page " + page}></span>
-	     <button onClick={onPrevPage} class="btn btn-outline-primary">"Prev"</button>
-	     <button onClick={onNextPage} class="btn btn-outline-primary">"Next"</button>
-	   </div>	    
-	   </div>
-	   </div>
-   } where {
-	   page = Number.toString(currentPage + 1)
-   }
-
-   get perPageOptions : Array(String) {
-	   ["10","25","50","100"]
-   }
-
-    fun onPerPage (event : Html.Event) {
+  fun onPerPage (event : Html.Event) {
 		sequence {
            next { selectedPerPage = Dom.getValue(event.target) }
 		   getTransactions()
@@ -186,7 +158,7 @@ connect Application exposing { blockId }
 											<h3 class="card-title">"Transactions"</h3> 
 									    </div>
 										<div class="float-right">		
-											<{ pagination() }>
+											<Pagination paginationKind={PaginationKind::Transaction(paginationData)} selectedPerPage={selectedPerPage} onPerPage={onPerPage} onPrevPage={onPrevPage} onNextPage={onNextPage}/>
 										</div>
 										</div>
 									</div>
@@ -217,7 +189,7 @@ connect Application exposing { blockId }
 									</div>
    } where {
       recentTransactions = (transactions |> Maybe.map(.transactions) |> Maybe.withDefault([] of TransactionsResponse))
-
+      paginationData = transactions |> Maybe.map(.pagination) |> Maybe.withDefault({ page = 0, totalCount = 0})
   }
 
 }
