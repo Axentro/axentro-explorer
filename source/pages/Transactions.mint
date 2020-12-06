@@ -1,7 +1,7 @@
 component Transactions {
   fun render : Html {
     <Layout
-      navigation=[<Navigation/>]
+      navigation=[<Navigation current="transactions"/>]
       content=[pageContent()]/>
   }
 

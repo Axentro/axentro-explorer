@@ -71,7 +71,7 @@ component AllTransactions {
     }
   }
 
-   fun getAddressTransactions (page : String, perPage : String) : Promise(Never, Void) {
+  fun getAddressTransactions (page : String, perPage : String) : Promise(Never, Void) {
     sequence {
       response =
         Http.get(Network.baseUrl() + "/api/v1/address/" + address + "/transactions?page=" + page + "&per_page=" + perPage + "&sort_field=time")

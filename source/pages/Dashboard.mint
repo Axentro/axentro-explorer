@@ -6,7 +6,7 @@ component Dashboard {
 
   fun render : Html {
     <Layout
-      navigation=[<Navigation/>]
+      navigation=[<Navigation current="dashboard"/>]
       content=[pageContent()]/>
   }
 

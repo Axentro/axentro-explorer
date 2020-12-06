@@ -71,7 +71,6 @@ record AddressTransactionResponse {
   confirmations : Number
 }
 
-
 record TransactionsResponse {
   transaction : ApiTransaction,
   confirmations : Number,

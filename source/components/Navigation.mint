@@ -1,11 +1,11 @@
 component Navigation {
-  property current : String = "home"
+  property current : String
 
   fun activeStyle (item : String) : String {
     if (item == current) {
-      "btn-info"
+      "active"
     } else {
-      "btn-outline-info"
+      ""
     }
   }
 
@@ -13,7 +13,7 @@ component Navigation {
     <ul class="side-menu toggle-menu">
       <li class="slide">
         <a
-          class="side-menu__item active"
+          class={"side-menu__item " + activeStyle("dashboard")}
           href="/dashboard">
 
           <i class="side-menu__icon las la-home"/>
@@ -27,7 +27,7 @@ component Navigation {
 
       <li class="slide">
         <a
-          class="side-menu__item"
+           class={"side-menu__item " + activeStyle("blocks")}
           href="/blocks">
 
           <i class="side-menu__icon las la-cube"/>
@@ -41,7 +41,7 @@ component Navigation {
 
       <li class="slide">
         <a
-          class="side-menu__item"
+           class={"side-menu__item " + activeStyle("transactions")}
           href="/transactions">
 
           <i class="side-menu__icon las la-tasks"/>

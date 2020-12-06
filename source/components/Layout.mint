@@ -20,7 +20,7 @@ component Layout {
             <div class="app-sidebar__logo">
               <a
                 class="header-brand"
-                href="index.html">
+                href="/">
 
                 <img
                   src="../../assets/images/brand/axentro-logo.png"
@@ -45,7 +45,7 @@ component Layout {
               </a>
             </div>
 
-            <Navigation/>
+            <{ navigation }>
           </aside>
 
           <div class="app-header header">
@@ -53,7 +53,7 @@ component Layout {
               <div class="d-flex">
                 <a
                   class="header-brand"
-                  href="index.html">
+                  href="/">
 
                   <img
                     src="../../assets/images/brand/axentro-logo.png"
@@ -99,6 +99,7 @@ component Layout {
 
                 </div>
 
+              /*
                 <form class="form-inline">
                   <div class="search-element">
                     <button
@@ -118,6 +119,7 @@ component Layout {
                   </div>
                 </form>
 
+               */
                 <div class="d-flex order-lg-2 ml-auto header-right"/>
               </div>
             </div>

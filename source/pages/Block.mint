@@ -6,7 +6,7 @@ component Block {
 
   fun render : Html {
     <Layout
-      navigation=[<Navigation/>]
+      navigation=[<Navigation current="blocks"/>]
       content=[pageContent()]/>
   }
 

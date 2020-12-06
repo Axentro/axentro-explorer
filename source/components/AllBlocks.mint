@@ -72,7 +72,7 @@ component AllBlocks {
   }
 
   fun renderTransactionCount (row : ApiBlock) : Html {
-    <a href={"/block/" + blockId + "/transactions"}>
+    <a href={"/blocks/" + blockId + "/transactions"}>
       <{ count }>
     </a>
   } where {

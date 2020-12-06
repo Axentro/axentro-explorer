@@ -1,10 +1,9 @@
 component Address {
+  connect Application exposing { address }
 
-   connect Application exposing { address }
-
- fun render : Html {
+  fun render : Html {
     <Layout
-      navigation=[<Navigation/>]
+      navigation=[<Navigation current="transactions"/>]
       content=[pageContent()]/>
   }
 
@@ -30,7 +29,7 @@ component Address {
                 aria-current="page">
 
                 <a href={"/address/" + address}>
-                  <{"Address " + address}>
+                  <{ "Address " + address }>
                 </a>
 
               </li>
@@ -41,9 +40,10 @@ component Address {
         </div>
 
         <div class="row">
-         <div class="col-lg-4 col-12">
+          <div class="col-lg-4 col-12">
             <WalletBalance/>
           </div>
+
           <div class="col-lg-8 col-12">
             <AllTransactions source={TransactionState::Address}/>
           </div>
