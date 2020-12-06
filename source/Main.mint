@@ -16,15 +16,15 @@ component Main {
         name = "transactions",
         contents = <Transactions/>
       },
-        {
+      {
         name = "blocks",
         contents = <Blocks/>
       },
-       {
+      {
         name = "block",
         contents = <Block/>
       },
-       {
+      {
         name = "transaction",
         contents = <Transaction/>
       },
@@ -32,6 +32,10 @@ component Main {
         name = "block_transactions",
         contents = <BlockTransactions/>
       },
+      {
+        name = "address",
+        contents = <Address/>
+      }
     ]
   }
 

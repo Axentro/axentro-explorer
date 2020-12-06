@@ -1,5 +1,5 @@
 enum TransactionState {
-    All
-    Block
-    Address
+  All
+  Block
+  Address
 }

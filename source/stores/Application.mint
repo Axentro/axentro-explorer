@@ -1,7 +1,8 @@
 store Application {
   state page : String = ""
-  state blockId : String = "" 
-  state transactionId : String = "" 
+  state blockId : String = ""
+  state transactionId : String = ""
+  state address : String = ""
 
   fun setPage (page : String) : Promise(Never, Void) {
     sequence {
@@ -10,11 +11,15 @@ store Application {
     }
   }
 
-  fun setBlockId(blockId : String) : Promise(Never, Void) {
+  fun setBlockId (blockId : String) : Promise(Never, Void) {
     next { blockId = blockId }
   }
 
-  fun setTransactionId(transactionId : String) : Promise(Never, Void) {
+  fun setTransactionId (transactionId : String) : Promise(Never, Void) {
     next { transactionId = transactionId }
+  }
+
+  fun setAddress (address : String) : Promise(Never, Void) {
+    next { address = address}
   }
 }

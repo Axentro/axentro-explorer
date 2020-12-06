@@ -7,28 +7,35 @@ routes {
     Application.setPage("dashboard")
   }
 
-   /transactions/:transactionId (transactionId: String) {
+  /transactions/:transactionId (transactionId : String) {
     sequence {
       Application.setTransactionId(transactionId)
       Application.setPage("transaction")
     }
   }
 
-   /transactions {
+  /transactions {
     Application.setPage("transactions")
   }
 
-   /blocks/:blockId/transactions (blockId: String) {
+  /blocks/:blockId/transactions (blockId : String) {
     sequence {
       Application.setBlockId(blockId)
       Application.setPage("block_transactions")
     }
   }
 
-  /blocks/:blockId (blockId: String) {
+  /blocks/:blockId (blockId : String) {
     sequence {
       Application.setBlockId(blockId)
       Application.setPage("block")
+    }
+  }
+
+  /address/:address (address : String) {
+    sequence {
+      Application.setAddress(address)
+      Application.setPage("address")
     }
   }
 

@@ -1,5 +1,8 @@
-component Blocks {
-  fun render : Html {
+component Address {
+
+   connect Application exposing { address }
+
+ fun render : Html {
     <Layout
       navigation=[<Navigation/>]
       content=[pageContent()]/>
@@ -26,8 +29,8 @@ component Blocks {
                 class="breadcrumb-item active"
                 aria-current="page">
 
-                <a href="/blocks">
-                  "Blocks"
+                <a href={"/address/" + address}>
+                  <{"Address " + address}>
                 </a>
 
               </li>
@@ -37,9 +40,12 @@ component Blocks {
           <div class="page-rightheader"/>
         </div>
 
-        <div class="row row-deck">
-          <div class="col-lg-12 col-12">
-            <AllBlocks/>
+        <div class="row">
+         <div class="col-lg-4 col-12">
+            <WalletBalance/>
+          </div>
+          <div class="col-lg-8 col-12">
+            <AllTransactions source={TransactionState::Address}/>
           </div>
         </div>
       </div>

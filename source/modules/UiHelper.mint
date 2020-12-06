@@ -1,29 +1,28 @@
 module UiHelper {
-
-  fun capLength(value : String, length : Number) : String {
-      (value
-      |> String.split("")
-      |> Array.take(length)
-      |> String.join("")) + "..."
+  fun capLength (value : String, length : Number) : String {
+    (value
+    |> String.split("")
+    |> Array.take(length)
+    |> String.join("")) + "..."
   }
 
-  fun displayAmount(value : Number) : String {
-      `new Decimal(#{value} / 100000000).toString()`
+  fun displayAmount (value : Number) : String {
+    `new Decimal(#{value} / 100000000).toString()`
   }
 
-  fun timeAgo(millis : Number) : String {
-      `timeago().format(#{millis})`
+  fun timeAgo (millis : Number) : String {
+    `timeago().format(#{millis})`
   }
 
-  fun dateFrom(millis : Number) : String {
-      `new Date(#{millis}).toString()`
+  fun dateFrom (millis : Number) : String {
+    `new Date(#{millis}).toString()`
   }
 
-  fun roundUp(value : Number) : Number {
+  fun roundUp (value : Number) : Number {
     `Math.ceil(#{value})`
   }
 
- fun selectNameOptions (selectedName : String, options : Array(String)) : Array(Html) {
+  fun selectNameOptions (selectedName : String, options : Array(String)) : Array(Html) {
     options
     |> Array.map(
       (opt : String) : Html { renderSelectOption(opt, selectedName) })
@@ -44,5 +43,4 @@ module UiHelper {
       </option>
     }
   }
-
 }

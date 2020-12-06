@@ -1,27 +1,26 @@
-
 /* Stats */
 record ApiResponseStats {
-    status : String,
-    stats : StatsResponse using "result"
+  status : String,
+  stats : StatsResponse using "result"
 }
 
 record StatsResponse {
-    totals : Stats
+  totals : Stats
 }
 
 record Stats {
-    totalFastBlocks : Number using "total_fast",
-    totalSlowBlocks : Number using "total_slow",
-    totalBlocks : Number using "total_size",
-    totalFastTransactions : Number using "total_txns_fast",
-    totalSlowTransactions : Number using "total_txns_slow",
-    difficulty : Number
+  totalFastBlocks : Number using "total_fast",
+  totalSlowBlocks : Number using "total_slow",
+  totalBlocks : Number using "total_size",
+  totalFastTransactions : Number using "total_txns_fast",
+  totalSlowTransactions : Number using "total_txns_slow",
+  difficulty : Number
 }
 
 /* Transactions */
 record ApiResponseTransactions {
-    status : String,
-    transactions : PaginatedTransactions using "result"
+  status : String,
+  transactions : PaginatedTransactions using "result"
 }
 
 record PaginatedTransactions {
@@ -52,27 +51,43 @@ record ApiResponseBlockTransactions {
 
 record BlockTransactionsResponse {
   transactions : Array(ApiTransaction),
-  confirmations : Number, 
+  confirmations : Number,
   blockId : Number using "block_id",
   pagination : BlockPagination
 }
 
+record ApiResponseAddressTransactions {
+  status : String,
+  result : AddressTransactionsResponse
+}
+
+record AddressTransactionsResponse {
+  transactions : Array(AddressTransactionResponse),
+  pagination : TransactionPagination
+}
+
+record AddressTransactionResponse {
+  transaction : ApiTransaction,
+  confirmations : Number
+}
+
+
 record TransactionsResponse {
-    transaction : ApiTransaction,
-    confirmations : Number,
-    blockId : Number using "block_id"
+  transaction : ApiTransaction,
+  confirmations : Number,
+  blockId : Number using "block_id"
 }
 
 record ApiTransaction {
-    id : String,
-    action : String,
-    senders : Array(ApiSender),
-    recipients : Array(ApiRecipient),
-    token : String,
-    timestamp : Number,
-    kind : String,
-    message : String,
-    previousHash : String using "prev_hash"
+  id : String,
+  action : String,
+  senders : Array(ApiSender),
+  recipients : Array(ApiRecipient),
+  token : String,
+  timestamp : Number,
+  kind : String,
+  message : String,
+  previousHash : String using "prev_hash"
 }
 
 record ApiSender {
@@ -90,7 +105,7 @@ record ApiRecipient {
 
 /* Blocks */
 record ApiResponseBlocks {
-  status : String, 
+  status : String,
   blocks : BlocksResponse using "result"
 }
 
@@ -109,12 +124,12 @@ record SingleBlockResponse {
 }
 
 record ApiBlockResponse {
-  block : BlocksResponse  
+  block : BlocksResponse
 }
 
 record BlocksResponse {
- data : Array(ApiBlock),
- pagination : BlockPagination
+  data : Array(ApiBlock),
+  pagination : BlockPagination
 }
 
 record BlockPagination {
@@ -123,7 +138,7 @@ record BlockPagination {
 }
 
 record ApiBlock {
- index : Number, 
+  index : Number,
   transactions : Array(ApiTransaction),
   nonce : Maybe(String),
   previousHash : String using "prev_hash",
@@ -135,4 +150,23 @@ record ApiBlock {
   hash : Maybe(String),
   publicKey : Maybe(String) using "public_key",
   signature : Maybe(String)
+}
+
+/* Wallet */
+record ApiResponseWallet {
+  status : String,
+  result : ApiAddressInfo
+}
+
+record ApiAddressInfo {
+  address : String,
+  readable : Array(String),
+  tokens : Array(ApiAddressToken)
+}
+
+record ApiAddressToken {
+  name : String using "token",
+  isLocked : Bool using "is_locked",
+  isMine : Bool using "is_mine",
+  amount : String
 }
