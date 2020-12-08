@@ -39,6 +39,13 @@ routes {
     }
   }
 
+   /domain/:domain (domain : String) {
+    sequence {
+      Application.setAddress(domain)
+      Application.setPage("domain")
+    }
+  }
+
   /blocks {
     Application.setPage("blocks")
   }

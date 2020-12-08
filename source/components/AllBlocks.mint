@@ -10,6 +10,12 @@ component AllBlocks {
     }
   }
 
+   fun componentDidUpdate : Promise(Never, Void) {
+    sequence {
+      getBlocks()
+    }
+  }
+
   fun getBlocks : Promise(Never, Void) {
     sequence {
       response =
@@ -118,21 +124,18 @@ component AllBlocks {
   fun onPerPage (event : Html.Event) {
     sequence {
       next { selectedPerPage = Dom.getValue(event.target) }
-      getBlocks()
     }
   }
 
   fun onPrevPage (event : Html.Event) {
     sequence {
       next { currentPage = Math.max(0, currentPage - 1) }
-      getBlocks()
     }
   }
 
   fun onNextPage (event : Html.Event) {
     sequence {
       next { currentPage = currentPage + 1 }
-      getBlocks()
     }
   }
 

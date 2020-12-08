@@ -22,4 +22,5 @@ store Application {
   fun setAddress (address : String) : Promise(Never, Void) {
     next { address = address }
   }
+
 }

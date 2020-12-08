@@ -35,6 +35,10 @@ component Main {
       {
         name = "address",
         contents = <Address/>
+      },
+       {
+        name = "domain",
+        contents = <Domain/>
       }
     ]
   }

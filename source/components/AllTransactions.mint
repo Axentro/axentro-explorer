@@ -109,10 +109,49 @@ component AllTransactions {
     }
   }
 
+   fun getDomainTransactions (page : String, perPage : String) : Promise(Never, Void) {
+    sequence {
+      response =
+        Http.get(Network.baseUrl() + "/api/v1/domain/" + address + "/transactions?page=" + page + "&per_page=" + perPage + "&sort_field=time")
+        |> Http.send()
+
+      json =
+        Json.parse(response.body)
+        |> Maybe.toResult("Json parsing error with transactions")
+
+      Debug.log(json)
+
+      result =
+        decode json as ApiResponseAddressTransactions
+
+      txns =
+        result.result.transactions
+        |> Array.map(
+          (t : AddressTransactionResponse) {
+            {
+              transaction = t.transaction,
+              confirmations = t.confirmations,
+              blockId = 0
+            }
+          })
+
+      modified =
+        {
+          transactions = txns,
+          pagination = result.result.pagination
+        }
+
+      next { transactions = Maybe.just(modified) }
+    } catch {
+      next { error = "Could not fetch transactions" }
+    }
+  }
+
   fun getTransactions : Promise(Never, Void) {
     case (source) {
       TransactionState::All => getAllTransactions(page, perPage)
       TransactionState::Address => getAddressTransactions(page, perPage)
+      TransactionState::Domain => getDomainTransactions(page, perPage)
       TransactionState::Block => getBlockTransactions(page, perPage)
     }
   } where {

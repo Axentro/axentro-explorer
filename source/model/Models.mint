@@ -169,3 +169,21 @@ record ApiAddressToken {
   isMine : Bool using "is_mine",
   amount : String
 }
+
+/* Official Nodes */
+record ApiResponseOfficialNodes {
+  status : String, 
+  result : OfficialNodes
+}
+
+record OfficialNodes {
+  all : Array(String),
+  online : Array(OnlineNode)
+}
+
+record OnlineNode {
+  id : String,
+  address : String,
+  url: String
+}
+

@@ -120,7 +120,9 @@ component Layout {
                 </form>
 
                */
-                <div class="d-flex order-lg-2 ml-auto header-right"/>
+                <div class="d-flex order-lg-2 ml-auto header-right">
+               
+                </div>
               </div>
             </div>
           </div>
