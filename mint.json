@@ -2,7 +2,7 @@
   "name": "axentro-explorer",
   "application": {
     "head": "assets/head.html",
-    "title": "axentro-explorer"
+    "title": "Axentro Blockchain Explorer"
   },
   "source-directories": [
     "source"
