@@ -89,11 +89,11 @@ component AllTransactions {
       txns =
         result.result.transactions
         |> Array.map(
-          (t : AddressTransactionResponse) {
+          (t : TransactionsResponse) {
             {
               transaction = t.transaction,
               confirmations = t.confirmations,
-              blockId = 0
+              blockId = t.blockId
             }
           })
 
@@ -127,11 +127,11 @@ component AllTransactions {
       txns =
         result.result.transactions
         |> Array.map(
-          (t : AddressTransactionResponse) {
+          (t : TransactionsResponse) {
             {
               transaction = t.transaction,
               confirmations = t.confirmations,
-              blockId = 0
+              blockId = t.blockId
             }
           })
 

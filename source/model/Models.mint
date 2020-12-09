@@ -62,13 +62,8 @@ record ApiResponseAddressTransactions {
 }
 
 record AddressTransactionsResponse {
-  transactions : Array(AddressTransactionResponse),
+  transactions : Array(TransactionsResponse),
   pagination : TransactionPagination
-}
-
-record AddressTransactionResponse {
-  transaction : ApiTransaction,
-  confirmations : Number
 }
 
 record TransactionsResponse {
