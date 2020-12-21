@@ -14,7 +14,7 @@ component NotFound {
           </div>
 
           <div class="h4  mb-2">
-            "We are very sorry for inconvenicence. "
+            "We are very sorry for any inconvenicence. "
           </div>
 
           <div class="h5">
