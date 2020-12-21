@@ -1,9 +1,9 @@
-component Block {
-  connect Application exposing { blockId }
+component NoSearch {
+  connect Application exposing { searchTerm }
 
   fun render : Html {
     <Layout
-      navigation=[<Navigation current="blocks"/>]
+      navigation=[<Navigation current="dashboard"/>]
       content=[pageContent()]/>
   }
 
@@ -28,9 +28,7 @@ component Block {
                 class="breadcrumb-item active"
                 aria-current="page">
 
-                <a href="/blocks">
-                  "Blocks"
-                </a>
+                <p>"Search"</p>
 
               </li>
 
@@ -38,9 +36,9 @@ component Block {
                 class="breadcrumb-item active"
                 aria-current="page">
 
-                <a href={"/blocks/" + blockId}>
-                  <{ "Block " + blockId }>
-                </a>
+                <p>
+                  <{ searchTerm }>
+                </p>
 
               </li>
             </ol>
@@ -50,8 +48,20 @@ component Block {
         </div>
 
         <div class="row row-deck">
-          <div class="col-lg-12 col-12">
-            <OneBlock/>
+          <div class="col-md-12 col-xl-4">
+            <div class="card">
+              <div class="card-status card-status-left bg-danger br-bl-3 br-tl-3"/>
+
+              <div class="card-header">
+                <h3 class="card-title">
+                  "Search result not found"
+                </h3>
+              </div>
+
+              <div class="card-body">
+                <{ "Nothing found for the search term: " + searchTerm }>
+              </div>
+            </div>
           </div>
         </div>
       </div>

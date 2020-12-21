@@ -36,9 +36,17 @@ component Main {
         name = "address",
         contents = <Address/>
       },
-       {
+      {
         name = "domain",
         contents = <Domain/>
+      },
+      {
+        name = "no_search",
+        contents = <NoSearch/>
+      },
+      {
+        name = "not_found",
+        contents = <NotFound/>
       }
     ]
   }

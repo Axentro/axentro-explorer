@@ -39,7 +39,7 @@ routes {
     }
   }
 
-   /domain/:domain (domain : String) {
+  /domain/:domain (domain : String) {
     sequence {
       Application.setAddress(domain)
       Application.setPage("domain")
@@ -48,6 +48,13 @@ routes {
 
   /blocks {
     Application.setPage("blocks")
+  }
+
+  /no_search/:term (term : String) {
+    sequence {
+      Application.setSearchTerm(term)
+      Application.setPage("no_search")
+    }
   }
 
   * {

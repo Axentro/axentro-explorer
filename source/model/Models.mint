@@ -167,7 +167,7 @@ record ApiAddressToken {
 
 /* Official Nodes */
 record ApiResponseOfficialNodes {
-  status : String, 
+  status : String,
   result : OfficialNodes
 }
 
@@ -179,6 +179,5 @@ record OfficialNodes {
 record OnlineNode {
   id : String,
   address : String,
-  url: String
+  url : String
 }
-

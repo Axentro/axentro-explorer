@@ -1,10 +1,43 @@
 component OneBlock {
-  property blocks : Array(ApiBlock)
+  connect Application exposing { blockId }
+  state block : Maybe(ApiBlock) = Maybe.nothing()
+  state error : String = ""
 
-  fun render : Array(Html) {
-    for (block of blocks) {
-      renderBlock(block)
+  fun componentDidMount : Promise(Never, Void) {
+    sequence {
+      getBlock()
     }
+  }
+
+  fun componentDidUpdate : Promise(Never, Void) {
+    sequence {
+      getBlock()
+    }
+  }
+
+  fun getBlock : Promise(Never, Void) {
+    sequence {
+      response =
+        Http.get(Network.baseUrl() + "/api/v1/block/" + blockId)
+        |> Http.send()
+
+      json =
+        Json.parse(response.body)
+        |> Maybe.toResult("Json parsing error with transaction")
+
+      result =
+        decode json as ApiResponseSingleBlock
+
+      next { block = Maybe.just(result.block.block) }
+    } catch {
+      next { error = "Could not fetch block" }
+    }
+  }
+
+  fun render : Html {
+    block
+    |> Maybe.map(renderBlock)
+    |> Maybe.withDefault(<div/>)
   }
 
   fun renderBlockKind (row : ApiBlock) : Html {

@@ -27,7 +27,7 @@ component Navigation {
 
       <li class="slide">
         <a
-           class={"side-menu__item " + activeStyle("blocks")}
+          class={"side-menu__item " + activeStyle("blocks")}
           href="/blocks">
 
           <i class="side-menu__icon las la-cube"/>
@@ -41,7 +41,7 @@ component Navigation {
 
       <li class="slide">
         <a
-           class={"side-menu__item " + activeStyle("transactions")}
+          class={"side-menu__item " + activeStyle("transactions")}
           href="/transactions">
 
           <i class="side-menu__icon las la-tasks"/>

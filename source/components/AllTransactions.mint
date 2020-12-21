@@ -109,7 +109,7 @@ component AllTransactions {
     }
   }
 
-   fun getDomainTransactions (page : String, perPage : String) : Promise(Never, Void) {
+  fun getDomainTransactions (page : String, perPage : String) : Promise(Never, Void) {
     sequence {
       response =
         Http.get(Network.baseUrl() + "/api/v1/domain/" + address + "/transactions?page=" + page + "&per_page=" + perPage + "&sort_field=time")

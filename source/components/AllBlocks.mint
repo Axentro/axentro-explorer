@@ -10,7 +10,7 @@ component AllBlocks {
     }
   }
 
-   fun componentDidUpdate : Promise(Never, Void) {
+  fun componentDidUpdate : Promise(Never, Void) {
     sequence {
       getBlocks()
     }

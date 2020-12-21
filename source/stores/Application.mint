@@ -3,6 +3,7 @@ store Application {
   state blockId : String = ""
   state transactionId : String = ""
   state address : String = ""
+  state searchTerm : String = ""
 
   fun setPage (page : String) : Promise(Never, Void) {
     sequence {
@@ -23,4 +24,7 @@ store Application {
     next { address = address }
   }
 
+  fun setSearchTerm (term : String) : Promise(Never, Void) {
+    next { searchTerm = term }
+  }
 }

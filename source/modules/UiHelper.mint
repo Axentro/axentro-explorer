@@ -28,6 +28,17 @@ module UiHelper {
       (opt : String) : Html { renderSelectOption(opt, selectedName) })
   }
 
+  fun submitOnEnter (
+    event : Html.Event,
+    callback : Function(Html.Event, Promise(Never, Void))
+  ) : Promise(Never, Void) {
+    if (event.charCode == 13) {
+      callback(event)
+    } else {
+      Promise.never()
+    }
+  }
+
   fun renderSelectOption (opt : String, currentlySelected : String) : Html {
     if (opt == currentlySelected) {
       <option

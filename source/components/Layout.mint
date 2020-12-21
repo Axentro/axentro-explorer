@@ -99,30 +99,8 @@ component Layout {
 
                 </div>
 
-              /*
-                <form class="form-inline">
-                  <div class="search-element">
-                    <button
-                      class="btn btn-primary-color"
-                      type="submit">
-
-                      <i class="fa fa-search"/>
-
-                    </button>
-
-                    <input
-                      type="search"
-                      class="form-control header-search"
-                      placeholder="Search by Address / Txn Id / Block / Token / Hra"
-                      aria-label="Search"
-                      tabindex="1"/>
-                  </div>
-                </form>
-
-               */
-                <div class="d-flex order-lg-2 ml-auto header-right">
-               
-                </div>
+                <Search/>
+                <div class="d-flex order-lg-2 ml-auto header-right"/>
               </div>
             </div>
           </div>
