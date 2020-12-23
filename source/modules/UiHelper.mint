@@ -19,7 +19,7 @@ module UiHelper {
   }
 
   fun shortDateFrom(millis : Number) : String {
-    `moment(#{millis}).format("d/MM/YYYY, hh:mm:ss")`
+    `moment(#{millis}).format("d/MM/YYYY, HH:mm:ss")`
   }
 
   fun roundUp (value : Number) : Number {
