@@ -49,16 +49,25 @@ component RecentBlocks {
   fun renderBlockId (row : ApiBlock) : Html {
     <div>
       <a href={"/blocks/" + blockId}>
-        <{ blockId }>
+        <{ "Block " + blockId }>
       </a>
 
       <div>
-        <{ calculateTimeAgo(row) }>
+      <div>
+        <b><{ calculateTimeAgo(row) }></b>
+        </div>
+        <div>
+        <i><{ renderDate(row) }></i>
+        </div>
       </div>
     </div>
   } where {
     blockId =
       Number.toString(row.index)
+  }
+
+  fun renderDate (row : ApiBlock) : String {
+    UiHelper.shortDateFrom(row.timestamp)
   }
 
   fun calculateTimeAgo (row : ApiBlock) : String {

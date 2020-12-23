@@ -183,7 +183,7 @@ component AllTransactions {
 
   fun renderBlockId (row : TransactionsResponse) : Html {
     <a href={"/blocks/" + blockId}>
-      <{ blockId }>
+      <{ "Block " + blockId }>
     </a>
   } where {
     blockId =
@@ -192,6 +192,10 @@ component AllTransactions {
 
   fun renderAge (row : TransactionsResponse) : String {
     UiHelper.timeAgo(row.transaction.timestamp)
+  }
+
+    fun renderDate (row : TransactionsResponse) : String {
+    UiHelper.shortDateFrom(row.transaction.timestamp)
   }
 
   fun renderAmount (row : TransactionsResponse) : Html {
@@ -237,7 +241,12 @@ component AllTransactions {
       </td>
 
       <td class="text-muted">
+        <div>
         <{ renderAge(row) }>
+        </div>
+        <div>
+        <i><{ renderDate(row) }></i>
+        </div>
       </td>
 
       <td class="text-muted">

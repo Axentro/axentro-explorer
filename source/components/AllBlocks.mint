@@ -52,7 +52,12 @@ component AllBlocks {
       </td>
 
       <td class="text-muted">
+         <div>    
         <{ renderAge(row) }>
+        </div>
+        <div>
+        <i><{ renderDate(row) }></i>
+        </div>
       </td>
 
       <td class="text-muted">
@@ -79,7 +84,7 @@ component AllBlocks {
 
   fun renderTransactionCount (row : ApiBlock) : Html {
     <a href={"/blocks/" + blockId + "/transactions"}>
-      <{ count }>
+      <{ count + " transactions" }>
     </a>
   } where {
     blockId =
@@ -112,9 +117,14 @@ component AllBlocks {
     UiHelper.timeAgo(row.timestamp)
   }
 
+  fun renderDate (row : ApiBlock) : String {
+    UiHelper.shortDateFrom(row.timestamp)
+  }
+
+
   fun renderBlockId (row : ApiBlock) : Html {
     <a href={"/blocks/" + blockId}>
-      <{ blockId }>
+      <{ "Block " + blockId }>
     </a>
   } where {
     blockId =

@@ -18,6 +18,10 @@ module UiHelper {
     `new Date(#{millis}).toString()`
   }
 
+  fun shortDateFrom(millis : Number) : String {
+    `moment(#{millis}).format("d/MM/YYYY, hh:mm:ss")`
+  }
+
   fun roundUp (value : Number) : Number {
     `Math.ceil(#{value})`
   }
