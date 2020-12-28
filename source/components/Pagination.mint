@@ -43,7 +43,7 @@ component Pagination {
     </div>
   } where {
     pageNumber =
-      paginationData.page + 1
+      paginationData.page
 
     page =
       Number.toString(pageNumber)
@@ -53,10 +53,10 @@ component Pagination {
       |> Maybe.withDefault(0)
 
     totalCountNumber =
-      (paginationData.totalCount / selectedPerPageNumber)
+     UiHelper.roundDown(paginationData.totalCount / selectedPerPageNumber)
 
     total =
-      Number.toString(UiHelper.roundUp(totalCountNumber))
+      Number.toString(totalCountNumber)
   }
 
   fun renderBlockPagination (paginationData : BlockPagination) : Html {
@@ -85,7 +85,7 @@ component Pagination {
     </div>
   } where {
     pageNumber =
-      paginationData.page + 1
+      paginationData.page
 
     page =
       Number.toString(pageNumber)
@@ -95,14 +95,14 @@ component Pagination {
       |> Maybe.withDefault(0)
 
     totalCountNumber =
-      (paginationData.totalCount / selectedPerPageNumber)
+      UiHelper.roundDown(paginationData.totalCount / selectedPerPageNumber)
 
     total =
-      Number.toString(UiHelper.roundUp(totalCountNumber))
+      Number.toString(totalCountNumber)
   }
 
   fun showPaginationPrev (pageNumber : Number) : Html {
-    if (pageNumber <= 1) {
+    if (pageNumber <= 0) {
       <button
         disabled={true}
         class="btn btn-outline-primary disabled">

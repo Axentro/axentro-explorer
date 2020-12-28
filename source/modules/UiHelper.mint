@@ -26,6 +26,10 @@ module UiHelper {
     `Math.ceil(#{value})`
   }
 
+   fun roundDown (value : Number) : Number {
+    `Math.floor(#{value})`
+  }
+
   fun selectNameOptions (selectedName : String, options : Array(String)) : Array(Html) {
     options
     |> Array.map(

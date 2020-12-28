@@ -1,8 +1,10 @@
 component AllBlocks {
+
+  connect Application exposing { currentPage, perPage }
+
   state blocks : Maybe(BlocksResponse) = Maybe.nothing()
   state error : String = ""
-  state selectedPerPage : String = "10"
-  state currentPage : Number = 0
+ 
 
   fun componentDidMount : Promise(Never, Void) {
     sequence {
@@ -19,7 +21,7 @@ component AllBlocks {
   fun getBlocks : Promise(Never, Void) {
     sequence {
       response =
-        Http.get(Network.baseUrl() + "/api/v1/blockchain?page=" + page + "&per_page=" + perPage + "&sort_field=time")
+        Http.get(Network.baseUrl() + "/api/v1/blockchain?page=" + currentPage + "&per_page=" + perPage + "&sort_field=time")
         |> Http.send()
 
       json =
@@ -33,13 +35,7 @@ component AllBlocks {
     } catch {
       next { error = "Could not fetch blocks" }
     }
-  } where {
-    perPage =
-      selectedPerPage
-
-    page =
-      Number.toString(currentPage)
-  }
+  } 
 
   fun renderBodyRow (row : ApiBlock) : Html {
     <tr>
@@ -132,21 +128,21 @@ component AllBlocks {
   }
 
   fun onPerPage (event : Html.Event) {
-    sequence {
-      next { selectedPerPage = Dom.getValue(event.target) }
-    }
+    Window.navigate("/blocks?page=" + currentPage + "&perPage=" + perPageValue)
+  } where {
+    perPageValue = Dom.getValue(event.target)
   }
 
   fun onPrevPage (event : Html.Event) {
-    sequence {
-      next { currentPage = Math.max(0, currentPage - 1) }
-    }
+    Window.navigate("/blocks?page=" + currentPageValue + "&perPage=" + perPage)
+  } where {
+    currentPageValue = Number.toString(Math.max(0, (Number.fromString(currentPage) |> Maybe.withDefault(0)) - 1))
   }
 
   fun onNextPage (event : Html.Event) {
-    sequence {
-      next { currentPage = currentPage + 1 }
-    }
+    Window.navigate("/blocks?page=" + currentPageValue + "&perPage=" + perPage)
+  } where {
+    currentPageValue = Number.toString((currentPage |> Number.fromString |> Maybe.withDefault(0)) + 1)
   }
 
   fun render : Html {
@@ -162,7 +158,7 @@ component AllBlocks {
           <div class="float-right">
             <Pagination
               paginationKind={PaginationKind::Block(paginationData)}
-              selectedPerPage={selectedPerPage}
+              selectedPerPage={perPage}
               onPerPage={onPerPage}
               onPrevPage={onPrevPage}
               onNextPage={onNextPage}/>

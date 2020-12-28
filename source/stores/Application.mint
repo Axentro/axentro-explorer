@@ -4,6 +4,8 @@ store Application {
   state transactionId : String = ""
   state address : String = ""
   state searchTerm : String = ""
+  state currentPage : String = "1"
+  state perPage : String = "10"
 
   fun setPage (page : String) : Promise(Never, Void) {
     sequence {
@@ -26,5 +28,13 @@ store Application {
 
   fun setSearchTerm (term : String) : Promise(Never, Void) {
     next { searchTerm = term }
+  }
+
+  fun setCurrentPage(currentPage : String) : Promise(Never, Void) {
+    next { currentPage = currentPage }
+  }
+
+   fun setPerPage(perPage : String) : Promise(Never, Void) {
+    next { perPage = perPage }
   }
 }

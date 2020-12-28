@@ -1,14 +1,17 @@
 component AllTransactions {
-  connect Application exposing { blockId, address }
+  connect Application exposing { blockId, address, currentPage, perPage }
 
   property source : TransactionState
   state transactions : Maybe(PaginatedTransactions) = Maybe.nothing()
   state error : String = ""
 
-  state selectedPerPage : String = "10"
-  state currentPage : Number = 0
-
   fun componentDidMount : Promise(Never, Void) {
+    sequence {
+      getTransactions()
+    }
+  }
+
+   fun componentDidUpdate : Promise(Never, Void) {
     sequence {
       getTransactions()
     }
@@ -149,17 +152,11 @@ component AllTransactions {
 
   fun getTransactions : Promise(Never, Void) {
     case (source) {
-      TransactionState::All => getAllTransactions(page, perPage)
-      TransactionState::Address => getAddressTransactions(page, perPage)
-      TransactionState::Domain => getDomainTransactions(page, perPage)
-      TransactionState::Block => getBlockTransactions(page, perPage)
+      TransactionState::All => getAllTransactions(currentPage, perPage)
+      TransactionState::Address => getAddressTransactions(currentPage, perPage)
+      TransactionState::Domain => getDomainTransactions(currentPage, perPage)
+      TransactionState::Block => getBlockTransactions(currentPage, perPage)
     }
-  } where {
-    perPage =
-      selectedPerPage
-
-    page =
-      Number.toString(currentPage)
   }
 
   fun renderAddresses (addresses : Array(String)) : Array(Html) {
@@ -282,24 +279,36 @@ component AllTransactions {
   }
 
   fun onPerPage (event : Html.Event) {
-    sequence {
-      next { selectedPerPage = Dom.getValue(event.target) }
-      getTransactions()
+    case (source) {
+      TransactionState::All => Window.navigate("/transactions?page=" + currentPage + "&perPage=" + currentPerPageValue)
+      TransactionState::Address => Window.navigate("/address/" + address + "?page=" + currentPage + "&perPage=" + currentPerPageValue)
+      TransactionState::Domain => Window.navigate("/domain/" + address + "?page=" + currentPage + "&perPage=" + currentPerPageValue)
+      TransactionState::Block => Window.navigate("/blocks/" + blockId + "/transactions?page=" + currentPage + "&perPage=" + currentPerPageValue)
     }
+  } where {
+    currentPerPageValue = Dom.getValue(event.target)
   }
 
   fun onPrevPage (event : Html.Event) {
-    sequence {
-      next { currentPage = Math.max(0, currentPage - 1) }
-      getTransactions()
+    case (source) {
+      TransactionState::All => Window.navigate("/transactions?page=" + currentPageValue + "&perPage=" + perPage)
+      TransactionState::Address => Window.navigate("/address/" + address + "?page=" + currentPageValue + "&perPage=" + perPage)
+      TransactionState::Domain => Window.navigate("/domain/" + address + "?page=" + currentPageValue + "&perPage=" + perPage)
+      TransactionState::Block => Window.navigate("/blocks/" + blockId + "/transactions?page=" + currentPageValue + "&perPage=" + perPage)
     }
+  } where {
+    currentPageValue = Number.toString(Math.max(0, (currentPage |> Number.fromString() |> Maybe.withDefault(0)) - 1))
   }
 
   fun onNextPage (event : Html.Event) {
-    sequence {
-      next { currentPage = currentPage + 1 }
-      getTransactions()
+    case (source) {
+      TransactionState::All => Window.navigate("/transactions?page=" + currentPageValue + "&perPage=" + perPage)
+      TransactionState::Address => Window.navigate("/address/" + address + "?page=" + currentPageValue + "&perPage=" + perPage)
+      TransactionState::Domain => Window.navigate("/domain/" + address + "?page=" + currentPageValue + "&perPage=" + perPage)
+      TransactionState::Block => Window.navigate("/blocks/" + blockId + "/transactions?page=" + currentPageValue + "&perPage=" + perPage)
     }
+  } where {
+    currentPageValue = Number.toString((currentPage |> Number.fromString() |> Maybe.withDefault(0)) + 1)
   }
 
   fun render : Html {
@@ -315,7 +324,7 @@ component AllTransactions {
           <div class="float-right">
             <Pagination
               paginationKind={PaginationKind::Transaction(paginationData)}
-              selectedPerPage={selectedPerPage}
+              selectedPerPage={perPage}
               onPerPage={onPerPage}
               onPrevPage={onPrevPage}
               onNextPage={onNextPage}/>
