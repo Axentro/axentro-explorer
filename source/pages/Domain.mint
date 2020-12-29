@@ -1,5 +1,5 @@
 component Domain {
-  connect Application exposing { address }
+  connect TransactionStore exposing { address }
 
   fun render : Html {
     <Layout
@@ -45,7 +45,7 @@ component Domain {
           </div>
 
           <div class="col-lg-8 col-12">
-            <AllTransactions source={TransactionState::Domain}/>
+            <AllTransactions />
           </div>
         </div>
       </div>

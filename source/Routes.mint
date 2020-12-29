@@ -16,34 +16,36 @@ routes {
 
   /transactions?page=:currentPage&perPage=:perPage (currentPage : String, perPage : String) {
     sequence {
-      Application.setCurrentPage(currentPage)
-      Application.setPerPage(perPage)
+      TransactionStore.setCurrentPage(currentPage)
+      TransactionStore.setPerPage(perPage)
+      TransactionStore.getAllTransactions()
       Application.setPage("transactions")
     }
   }
 
   /transactions {
-    sequence {
-      Application.setCurrentPage("0")
-      Application.setPerPage("10")  
+     sequence {
+      TransactionStore.getAllTransactions()
       Application.setPage("transactions")
-    }
+     }
   }
 
  /blocks/:blockId/transactions?page=:currentPage&perPage=:perPage (blockId : String, currentPage : String, perPage : String) {
     sequence {
-      Application.setBlockId(blockId)
-      Application.setCurrentPage(currentPage)
-      Application.setPerPage(perPage)  
+      TransactionStore.setBlockId(blockId)
+      TransactionStore.setCurrentPage(currentPage)
+      TransactionStore.setPerPage(perPage)  
+      TransactionStore.setSource(TransactionState::Block)  
+      TransactionStore.getBlockTransactions()
       Application.setPage("block_transactions")
     }
   }
 
   /blocks/:blockId/transactions (blockId : String) {
     sequence {
-      Application.setBlockId(blockId)
-      Application.setCurrentPage("0")
-      Application.setPerPage("10")  
+      TransactionStore.setBlockId(blockId)
+      TransactionStore.setSource(TransactionState::Block)  
+      TransactionStore.getBlockTransactions()
       Application.setPage("block_transactions")
     }
   }
@@ -57,52 +59,60 @@ routes {
 
   /address/:address?page=:currentPage&perPage=:perPage (address : String, currentPage : String, perPage : String) {
     sequence {
-      Application.setAddress(address)
-      Application.setCurrentPage(currentPage)
-      Application.setPerPage(perPage)  
+      TransactionStore.setAddress(address)
+      TransactionStore.setCurrentPage(currentPage)
+      TransactionStore.setPerPage(perPage)
+      TransactionStore.setSource(TransactionState::Address)   
+      TransactionStore.getAddressTransactions() 
+      TransactionStore.getWalletInfo()
       Application.setPage("address")
     }
   }
 
   /domain/:domain?page=:currentPage&perPage=:perPage (domain : String, currentPage : String, perPage : String) {
     sequence {
-      Application.setAddress(domain)
-      Application.setCurrentPage(currentPage)
-      Application.setPerPage(perPage)  
+     TransactionStore.setAddress(domain)
+      TransactionStore.setCurrentPage(currentPage)
+      TransactionStore.setPerPage(perPage)
+      TransactionStore.setSource(TransactionState::Domain)   
+      TransactionStore.getDomainTransactions() 
+      TransactionStore.getWalletInfo()
       Application.setPage("domain")
     }
   }
 
   /address/:address (address : String) {
     sequence {
-      Application.setAddress(address)
-       Application.setCurrentPage("0")
-      Application.setPerPage("10")  
+      TransactionStore.setAddress(address)
+      TransactionStore.setSource(TransactionState::Address)   
+      TransactionStore.getAddressTransactions()  
+      TransactionStore.getWalletInfo()
       Application.setPage("address")
     }
   }
 
   /domain/:domain (domain : String) {
     sequence {
-      Application.setAddress(domain)
-      Application.setCurrentPage("0")
-      Application.setPerPage("10")  
+      TransactionStore.setAddress(domain)
+      TransactionStore.setSource(TransactionState::Domain)   
+      TransactionStore.getDomainTransactions() 
+      TransactionStore.getWalletInfo()
       Application.setPage("domain")
     }
   }
 
   /blocks?page=:currentPage&perPage=:perPage (currentPage : String, perPage : String) {
     sequence {
-      Application.setCurrentPage(currentPage)
-      Application.setPerPage(perPage)
+      BlockStore.setCurrentPage(currentPage)
+      BlockStore.setPerPage(perPage)
+      BlockStore.getBlocks()
       Application.setPage("blocks")
     }
   }
 
   /blocks {
     sequence {
-      Application.setCurrentPage("0")
-      Application.setPerPage("10")
+      BlockStore.getBlocks()
       Application.setPage("blocks")
     }
   }

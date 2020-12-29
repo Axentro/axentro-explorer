@@ -1,18 +1,7 @@
 component WalletBalance {
-  connect Application exposing { address }
+  connect TransactionStore exposing { address, walletInfo, walletError }
 
-  state walletInfo : Maybe(ApiAddressInfo) = Maybe.nothing()
-  state error : String = ""
-
-  fun componentDidMount : Promise(Never, Void) {
-    getWalletInfo()
-  }
-
-  fun componentDidUpdate : Promise(Never, Void) {
-    getWalletInfo()
-  }
-
-  fun render : Html {
+   fun render : Html {
     walletInfo
     |> Maybe.map(renderView)
     |> Maybe.withDefault(<div/>)
@@ -59,25 +48,6 @@ component WalletBalance {
       <div class="small">
         <{ address }>
       </div>)
-  }
-
-  fun getWalletInfo : Promise(Never, Void) {
-    sequence {
-      response =
-        Http.get(Network.baseUrl() + "/api/v1/wallet/" + address)
-        |> Http.send()
-
-      json =
-        Json.parse(response.body)
-        |> Maybe.toResult("Json parsing error with wallet")
-
-      result =
-        decode json as ApiResponseWallet
-
-      next { walletInfo = Maybe.just(result.result) }
-    } catch {
-      next { error = "Could not fetch wallet info" }
-    }
   }
 
   fun isMineStyle (isMine : Bool) : Html {

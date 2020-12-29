@@ -2,7 +2,6 @@ store Application {
   state page : String = ""
   state blockId : String = ""
   state transactionId : String = ""
-  state address : String = ""
   state searchTerm : String = ""
   state currentPage : String = "1"
   state perPage : String = "10"
@@ -20,10 +19,6 @@ store Application {
 
   fun setTransactionId (transactionId : String) : Promise(Never, Void) {
     next { transactionId = transactionId }
-  }
-
-  fun setAddress (address : String) : Promise(Never, Void) {
-    next { address = address }
   }
 
   fun setSearchTerm (term : String) : Promise(Never, Void) {

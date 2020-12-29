@@ -1,4 +1,7 @@
 component BlockTransactions {
+
+   connect TransactionStore exposing { blockId }
+
   fun render : Html {
     <Layout
       navigation=[<Navigation current="transactions"/>]
@@ -23,6 +26,26 @@ component BlockTransactions {
               </li>
 
               <li
+                class="breadcrumb-item"
+                aria-current="page">
+
+                <a href="/blocks">
+                  "Blocks"
+                </a>
+
+              </li>
+
+              <li
+                class="breadcrumb-item"
+                aria-current="page">
+
+                <a href={"/blocks/" + blockId}>
+                  <{ "Block " + blockId }>
+                </a>
+
+              </li>
+
+              <li
                 class="breadcrumb-item active"
                 aria-current="page">
 
@@ -39,7 +62,7 @@ component BlockTransactions {
 
         <div class="row row-deck">
           <div class="col-lg-12 col-12">
-            <AllTransactions source={TransactionState::Block}/>
+            <AllTransactions />
           </div>
         </div>
       </div>

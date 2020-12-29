@@ -1,41 +1,6 @@
 component AllBlocks {
 
-  connect Application exposing { currentPage, perPage }
-
-  state blocks : Maybe(BlocksResponse) = Maybe.nothing()
-  state error : String = ""
- 
-
-  fun componentDidMount : Promise(Never, Void) {
-    sequence {
-      getBlocks()
-    }
-  }
-
-  fun componentDidUpdate : Promise(Never, Void) {
-    sequence {
-      getBlocks()
-    }
-  }
-
-  fun getBlocks : Promise(Never, Void) {
-    sequence {
-      response =
-        Http.get(Network.baseUrl() + "/api/v1/blockchain?page=" + currentPage + "&per_page=" + perPage + "&sort_field=time")
-        |> Http.send()
-
-      json =
-        Json.parse(response.body)
-        |> Maybe.toResult("Json parsing error with blocks")
-
-      result =
-        decode json as ApiResponseBlocks
-
-      next { blocks = Maybe.just(result.blocks) }
-    } catch {
-      next { error = "Could not fetch blocks" }
-    }
-  } 
+  connect BlockStore exposing { currentPage, perPage, blocks, blockError }
 
   fun renderBodyRow (row : ApiBlock) : Html {
     <tr>
