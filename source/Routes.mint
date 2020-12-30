@@ -25,6 +25,8 @@ routes {
 
   /transactions {
      sequence {
+      TransactionStore.setCurrentPage("0")
+      TransactionStore.setPerPage("10") 
       TransactionStore.getAllTransactions()
       Application.setPage("transactions")
      }
@@ -44,6 +46,8 @@ routes {
   /blocks/:blockId/transactions (blockId : String) {
     sequence {
       TransactionStore.setBlockId(blockId)
+      TransactionStore.setCurrentPage("0")
+      TransactionStore.setPerPage("10") 
       TransactionStore.setSource(TransactionState::Block)  
       TransactionStore.getBlockTransactions()
       Application.setPage("block_transactions")
@@ -84,6 +88,8 @@ routes {
   /address/:address (address : String) {
     sequence {
       TransactionStore.setAddress(address)
+      TransactionStore.setCurrentPage("0")
+      TransactionStore.setPerPage("10") 
       TransactionStore.setSource(TransactionState::Address)   
       TransactionStore.getAddressTransactions()  
       TransactionStore.getWalletInfo()
@@ -94,6 +100,8 @@ routes {
   /domain/:domain (domain : String) {
     sequence {
       TransactionStore.setAddress(domain)
+      TransactionStore.setCurrentPage("0")
+      TransactionStore.setPerPage("10")  
       TransactionStore.setSource(TransactionState::Domain)   
       TransactionStore.getDomainTransactions() 
       TransactionStore.getWalletInfo()
@@ -112,6 +120,8 @@ routes {
 
   /blocks {
     sequence {
+      BlockStore.setCurrentPage("0")
+      BlockStore.setPerPage("10")
       BlockStore.getBlocks()
       Application.setPage("blocks")
     }
