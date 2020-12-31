@@ -13,14 +13,58 @@ component AllTransactions {
     getBlockTransactions
   }
 
-  fun renderAddresses (addresses : Array(String)) : Array(Html) {
-    for (address of addresses) {
+  fun renderRemainingAddresses(total : Number, remaining : Number, capped : Number, transactionId : String) : Html {
+   if (remaining > 0) {
+   <div>
+     <a href={"/transactions/" + transactionId}>
+       <b><{ "showing " + cappedString + " of " + totalString }></b>
+    </a>
+    </div>
+  } else {
+    <div></div>
+  }
+  } where {
+    totalString = total |> Number.toString()
+    remainingString = remaining |> Number.toString()
+    cappedString = capped |> Number.toString()
+  }
+
+  fun renderRecipientAddresses (addresses : Array(String), row : TransactionsResponse) : Html {
+    <div>
+    for (address of cappedAddressList) {
       <div>
         <a href={"/address/" + address}>
           <{ UiHelper.capLength(address, 24) }>
         </a>
       </div>
     }
+    <{ renderRemainingAddresses(total, remaining, capped, transactionId) }>
+    </div>
+  } where {
+    cappedAddressList = addresses |> Array.take(3) 
+    capped = cappedAddressList |> Array.size()
+    total = addresses |> Array.size()
+    remaining = total - (cappedAddressList |> Array.size())
+    transactionId = row.transaction.id
+  }
+
+ fun renderSenderAddresses (addresses : Array(String), row : TransactionsResponse) : Html {
+    <div>
+    for (address of cappedAddressList) {
+      <div>
+        <a href={"/address/" + address}>
+          <{ UiHelper.capLength(address, 24) }>
+        </a>
+      </div>
+    }
+     <{ renderRemainingAddresses(total, remaining, capped, transactionId) }>
+    </div>
+  } where {
+    cappedAddressList = addresses |> Array.take(3) 
+    capped = cappedAddressList |> Array.size()
+    total = addresses |> Array.size()
+    remaining = total - (cappedAddressList |> Array.size())
+    transactionId = row.transaction.id
   }
 
   fun renderTransactionId (row : TransactionsResponse) : Html {
@@ -50,6 +94,63 @@ component AllTransactions {
   }
 
   fun renderAmount (row : TransactionsResponse) : Html {
+    if (String.isEmpty(address)) {
+      renderTotalAmount(row)
+    } else {
+      <div>
+      <div>
+      <{ renderAddressRecipientAmount(row) }>
+      </div>
+      <div>
+      <{ renderAddressSenderAmount(row) }>
+      </div>
+      </div>
+    }
+  }
+
+  fun renderAddressRecipientAmount(row : TransactionsResponse) : Html {
+    if (amount > 0) {
+    <h6 class="tag tag-blue">
+      <{ sum }>
+
+      <span class="tag-addon tag-azure">
+        "  AXNT"
+      </span>
+    </h6> 
+    } else {
+      <span></span>
+    }
+  } where {
+    amount =  row.transaction.recipients
+        |> Array.select((r : ApiRecipient) { r.address == address})
+        |> Array.map((r : ApiRecipient) { r.amount })
+        |> Array.sum
+
+     sum = UiHelper.displayAmount(amount)
+  }
+
+    fun renderAddressSenderAmount(row : TransactionsResponse) : Html {
+      if (amount > 0) {
+    <h6 class="tag tag-orange">
+      <{ sum }>
+
+      <span class="tag-addon tag-yellow">
+        "  AXNT"
+      </span>
+    </h6>
+      } else {
+        <span></span>
+      }
+  } where {
+    amount = row.transaction.senders
+        |> Array.select((r : ApiSender) { r.address == address})
+        |> Array.map((r : ApiSender) { r.amount })
+        |> Array.sum
+    sum =
+      UiHelper.displayAmount(amount)
+  }
+
+  fun renderTotalAmount(row : TransactionsResponse) : Html {
     <h6 class="tag tag-blue">
       <{ amount }>
 
@@ -108,13 +209,13 @@ component AllTransactions {
           if (Array.isEmpty(senderAddresses)) {
             <div/>
           } else {
-            <{ renderAddresses(senderAddresses) }>
+            <{ renderSenderAddresses(senderAddresses, row) }>
           }
         }>
       </td>
 
       <td class="text-muted">
-        <{ renderAddresses(recipientAddresses) }>
+        <{ renderRecipientAddresses(recipientAddresses, row) }>
       </td>
 
       <td class="text-muted">

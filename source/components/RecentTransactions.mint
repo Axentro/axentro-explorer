@@ -9,14 +9,14 @@ component RecentTransactions {
         } else {
           <div>
             "From: "
-            <{ renderAddresses(senderAddresses) }>
+            <{ renderSenderAddresses(senderAddresses, row) }>
           </div>
         }
       }>
 
       <div>
         "To: "
-        <{ renderAddresses(recipientAddresses) }>
+        <{ renderRecipientAddresses(recipientAddresses, row) }>
       </div>
     </div>
   } where {
@@ -29,14 +29,58 @@ component RecentTransactions {
       |> Array.map((r : ApiRecipient) { r.address })
   }
 
-  fun renderAddresses (addresses : Array(String)) : Array(Html) {
-    for (address of addresses) {
+ fun renderRemainingAddresses(total : Number, remaining : Number, capped : Number, transactionId : String) : Html {
+   if (remaining > 0) {
+   <div>
+     <a href={"/transactions/" + transactionId}>
+       <b><{ "showing " + cappedString + " of " + totalString }></b>
+    </a>
+    </div>
+  } else {
+    <div></div>
+  }
+  } where {
+    totalString = total |> Number.toString()
+    remainingString = remaining |> Number.toString()
+    cappedString = capped |> Number.toString()
+  }
+
+  fun renderRecipientAddresses (addresses : Array(String), row : TransactionsResponse) : Html {
+    <div>
+    for (address of cappedAddressList) {
       <div>
         <a href={"/address/" + address}>
           <{ UiHelper.capLength(address, 24) }>
         </a>
       </div>
     }
+    <{ renderRemainingAddresses(total, remaining, capped, transactionId) }>
+    </div>
+  } where {
+    cappedAddressList = addresses |> Array.take(3) 
+    capped = cappedAddressList |> Array.size()
+    total = addresses |> Array.size()
+    remaining = total - (cappedAddressList |> Array.size())
+    transactionId = row.transaction.id
+  }
+
+ fun renderSenderAddresses (addresses : Array(String), row : TransactionsResponse) : Html {
+    <div>
+    for (address of cappedAddressList) {
+      <div>
+        <a href={"/address/" + address}>
+          <{ UiHelper.capLength(address, 24) }>
+        </a>
+      </div>
+    }
+     <{ renderRemainingAddresses(total, remaining, capped, transactionId) }>
+    </div>
+  } where {
+    cappedAddressList = addresses |> Array.take(3) 
+    capped = cappedAddressList |> Array.size()
+    total = addresses |> Array.size()
+    remaining = total - (cappedAddressList |> Array.size())
+    transactionId = row.transaction.id
   }
 
   fun renderTransactionId (row : TransactionsResponse) : Html {

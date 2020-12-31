@@ -59,7 +59,7 @@ component Dashboard {
   fun getBlocks : Promise(Never, Void) {
     sequence {
       response =
-        Http.get(Network.baseUrl() + "/api/v1/blockchain?per_page=13&sort_field=time")
+        Http.get(Network.baseUrl() + "/api/v1/blockchain?per_page=15&sort_field=time")
         |> Http.send()
 
       json =

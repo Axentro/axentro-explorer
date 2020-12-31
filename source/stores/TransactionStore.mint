@@ -10,6 +10,36 @@ store TransactionStore {
   state transactionError : String = ""
   state source : TransactionState = TransactionState::All
 
+  fun initAllTransactions(currentPage : String, perPage : String) : Promise(Never, Void) {
+      sequence {
+        next { blockId = "", address = "", currentPage = currentPage, perPage = perPage, source = TransactionState::All }
+        getAllTransactions()
+      }
+  }
+
+  fun initBlockTransactions(blockId : String, currentPage : String, perPage : String) : Promise(Never, Void) {
+      sequence {
+          next { blockId = blockId, address = "", currentPage = currentPage, perPage = perPage, source = TransactionState::Block }
+          getBlockTransactions()
+      }
+  }
+
+   fun initAddressTransactions(address : String, currentPage : String, perPage : String) : Promise(Never, Void) {
+      sequence {
+          next { blockId = "", address = address, currentPage = currentPage, perPage = perPage, source = TransactionState::Address }
+          getWalletInfo()
+          getAddressTransactions()
+      }
+  }
+
+    fun initDomainTransactions(domain : String, currentPage : String, perPage : String) : Promise(Never, Void) {
+      sequence {
+          next { blockId = "", address = domain, currentPage = currentPage, perPage = perPage, source = TransactionState::Domain }
+          getWalletInfo()
+          getDomainTransactions()
+      }
+  }
+
   fun setAddress (address : String) : Promise(Never, Void) {
     next { address = address }
   }
