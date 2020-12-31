@@ -10,7 +10,8 @@ component AllTransactions {
     getAllTransactions,
     getAddressTransactions,
     getDomainTransactions,
-    getBlockTransactions
+    getBlockTransactions,
+    walletInfo
   }
 
   fun renderRemainingAddresses(total : Number, remaining : Number, capped : Number, transactionId : String) : Html {
@@ -121,8 +122,14 @@ component AllTransactions {
       <span></span>
     }
   } where {
+    walletAddress = if (address |> String.match(".ax")){
+      walletInfo |> Maybe.map((wi : ApiAddressInfo){ wi.address }) |> Maybe.withDefault("")
+    } else {
+      address
+    }
+
     amount =  row.transaction.recipients
-        |> Array.select((r : ApiRecipient) { r.address == address})
+        |> Array.select((r : ApiRecipient) { r.address == walletAddress})
         |> Array.map((r : ApiRecipient) { r.amount })
         |> Array.sum
 
@@ -142,8 +149,15 @@ component AllTransactions {
         <span></span>
       }
   } where {
+
+     walletAddress = if (address |> String.match(".ax")){
+      walletInfo |> Maybe.map((wi : ApiAddressInfo){ wi.address }) |> Maybe.withDefault("")
+    } else {
+      address
+    }
+
     amount = row.transaction.senders
-        |> Array.select((r : ApiSender) { r.address == address})
+        |> Array.select((r : ApiSender) { r.address == walletAddress})
         |> Array.map((r : ApiSender) { r.amount })
         |> Array.sum
     sum =

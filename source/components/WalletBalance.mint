@@ -37,17 +37,26 @@ component WalletBalance {
   }
 
   fun getWalletAddress (address : String, readable : Array(String)) : Html {
-    Array.first(readable)
+    <div>
+    <{ displayAddress }>
+    <{ humanReadable }>
+      </div>
+  } where {
+    humanReadable = Array.first(readable)
     |> Maybe.map(
       (domain : String) : Html {
-        <div class="tag tag-red">
+        <div class="mt-2 tag tag-red">
           <{ domain }>
         </div>
       })
-    |> Maybe.withDefault(
+    |> Maybe.withDefault(<span></span>)
+    displayAddress = if(address |> String.match(".ax")) {
+       <span></span>
+    } else {
       <div class="small">
         <{ address }>
-      </div>)
+      </div>
+    }
   }
 
   fun isMineStyle (isMine : Bool) : Html {
