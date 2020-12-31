@@ -45,7 +45,7 @@ component Domain {
           </div>
 
           <div class="col-lg-8 col-12">
-            <AllTransactions />
+            <AllTransactions/>
           </div>
         </div>
       </div>

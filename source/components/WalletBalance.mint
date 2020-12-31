@@ -1,7 +1,7 @@
 component WalletBalance {
   connect TransactionStore exposing { address, walletInfo, walletError }
 
-   fun render : Html {
+  fun render : Html {
     walletInfo
     |> Maybe.map(renderView)
     |> Maybe.withDefault(<div/>)

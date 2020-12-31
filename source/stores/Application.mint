@@ -22,5 +22,4 @@ store Application {
   fun setSearchTerm (term : String) : Promise(Never, Void) {
     next { searchTerm = term }
   }
-
 }

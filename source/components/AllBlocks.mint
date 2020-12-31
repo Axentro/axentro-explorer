@@ -1,5 +1,4 @@
 component AllBlocks {
-
   connect BlockStore exposing { currentPage, perPage, blocks, blockError }
 
   fun renderBodyRow (row : ApiBlock) : Html {
@@ -13,11 +12,14 @@ component AllBlocks {
       </td>
 
       <td class="text-muted">
-         <div>    
-        <{ renderAge(row) }>
-        </div>
         <div>
-        <i><{ renderDate(row) }></i>
+          <{ renderAge(row) }>
+        </div>
+
+        <div>
+          <i>
+            <{ renderDate(row) }>
+          </i>
         </div>
       </td>
 
@@ -82,7 +84,6 @@ component AllBlocks {
     UiHelper.shortDateFrom(row.timestamp)
   }
 
-
   fun renderBlockId (row : ApiBlock) : Html {
     <a href={"/blocks/" + blockId}>
       <{ "Block " + blockId }>
@@ -95,19 +96,29 @@ component AllBlocks {
   fun onPerPage (event : Html.Event) {
     Window.navigate("/blocks?page=" + currentPage + "&perPage=" + perPageValue)
   } where {
-    perPageValue = Dom.getValue(event.target)
+    perPageValue =
+      Dom.getValue(event.target)
   }
 
   fun onPrevPage (event : Html.Event) {
     Window.navigate("/blocks?page=" + currentPageValue + "&perPage=" + perPage)
   } where {
-    currentPageValue = Number.toString(Math.max(0, (Number.fromString(currentPage) |> Maybe.withDefault(0)) - 1))
+    currentPageValue =
+      Number.toString(
+        Math.max(
+          0,
+          (Number.fromString(currentPage)
+          |> Maybe.withDefault(0)) - 1))
   }
 
   fun onNextPage (event : Html.Event) {
     Window.navigate("/blocks?page=" + currentPageValue + "&perPage=" + perPage)
   } where {
-    currentPageValue = Number.toString((currentPage |> Number.fromString |> Maybe.withDefault(0)) + 1)
+    currentPageValue =
+      Number.toString(
+        (currentPage
+        |> Number.fromString
+        |> Maybe.withDefault(0)) + 1)
   }
 
   fun render : Html {

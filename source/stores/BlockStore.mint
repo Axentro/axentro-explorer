@@ -4,15 +4,15 @@ store BlockStore {
   state blockError : String = ""
   state blocks : Maybe(BlocksResponse) = Maybe.nothing()
 
-  fun setCurrentPage(currentPage : String) : Promise(Never, Void) {
+  fun setCurrentPage (currentPage : String) : Promise(Never, Void) {
     next { currentPage = currentPage }
   }
 
-   fun setPerPage(perPage : String) : Promise(Never, Void) {
+  fun setPerPage (perPage : String) : Promise(Never, Void) {
     next { perPage = perPage }
   }
 
-   fun getBlocks : Promise(Never, Void) {
+  fun getBlocks : Promise(Never, Void) {
     sequence {
       response =
         Http.get(Network.baseUrl() + "/api/v1/blockchain?page=" + currentPage + "&per_page=" + perPage + "&sort_field=time")
@@ -29,5 +29,5 @@ store BlockStore {
     } catch {
       next { blockError = "Could not fetch blocks" }
     }
-  } 
+  }
 }

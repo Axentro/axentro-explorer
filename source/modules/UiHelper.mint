@@ -18,7 +18,7 @@ module UiHelper {
     `new Date(#{millis}).toString()`
   }
 
-  fun shortDateFrom(millis : Number) : String {
+  fun shortDateFrom (millis : Number) : String {
     `moment(#{millis}).format("DD/MM/YYYY, HH:mm:ss")`
   }
 
@@ -26,7 +26,7 @@ module UiHelper {
     `Math.ceil(#{value})`
   }
 
-   fun roundDown (value : Number) : Number {
+  fun roundDown (value : Number) : Number {
     `Math.floor(#{value})`
   }
 

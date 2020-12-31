@@ -1,5 +1,17 @@
 component AllTransactions {
-  connect TransactionStore exposing { blockId, address, source, currentPage, perPage, transactions, transactionError, getAllTransactions, getAddressTransactions, getDomainTransactions, getBlockTransactions }
+  connect TransactionStore exposing {
+    blockId,
+    address,
+    source,
+    currentPage,
+    perPage,
+    transactions,
+    transactionError,
+    getAllTransactions,
+    getAddressTransactions,
+    getDomainTransactions,
+    getBlockTransactions
+  }
 
   fun renderAddresses (addresses : Array(String)) : Array(Html) {
     for (address of addresses) {
@@ -33,7 +45,7 @@ component AllTransactions {
     UiHelper.timeAgo(row.transaction.timestamp)
   }
 
-    fun renderDate (row : TransactionsResponse) : String {
+  fun renderDate (row : TransactionsResponse) : String {
     UiHelper.shortDateFrom(row.transaction.timestamp)
   }
 
@@ -81,10 +93,13 @@ component AllTransactions {
 
       <td class="text-muted">
         <div>
-        <{ renderAge(row) }>
+          <{ renderAge(row) }>
         </div>
+
         <div>
-        <i><{ renderDate(row) }></i>
+          <i>
+            <{ renderDate(row) }>
+          </i>
         </div>
       </td>
 
@@ -128,7 +143,8 @@ component AllTransactions {
       TransactionState::Block => Window.navigate("/blocks/" + blockId + "/transactions?page=" + currentPage + "&perPage=" + currentPerPageValue)
     }
   } where {
-    currentPerPageValue = Dom.getValue(event.target)
+    currentPerPageValue =
+      Dom.getValue(event.target)
   }
 
   fun onPrevPage (event : Html.Event) {
@@ -139,7 +155,13 @@ component AllTransactions {
       TransactionState::Block => Window.navigate("/blocks/" + blockId + "/transactions?page=" + currentPageValue + "&perPage=" + perPage)
     }
   } where {
-    currentPageValue = Number.toString(Math.max(0, (currentPage |> Number.fromString() |> Maybe.withDefault(0)) - 1))
+    currentPageValue =
+      Number.toString(
+        Math.max(
+          0,
+          (currentPage
+          |> Number.fromString()
+          |> Maybe.withDefault(0)) - 1))
   }
 
   fun onNextPage (event : Html.Event) {
@@ -150,7 +172,11 @@ component AllTransactions {
       TransactionState::Block => Window.navigate("/blocks/" + blockId + "/transactions?page=" + currentPageValue + "&perPage=" + perPage)
     }
   } where {
-    currentPageValue = Number.toString((currentPage |> Number.fromString() |> Maybe.withDefault(0)) + 1)
+    currentPageValue =
+      Number.toString(
+        (currentPage
+        |> Number.fromString()
+        |> Maybe.withDefault(0)) + 1)
   }
 
   fun render : Html {

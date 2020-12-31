@@ -18,19 +18,19 @@ store TransactionStore {
     next { blockId = blockId }
   }
 
- fun setSource(source : TransactionState) : Promise(Never, Void) {
+  fun setSource (source : TransactionState) : Promise(Never, Void) {
     next { source = source }
   }
 
- fun setCurrentPage(currentPage : String) : Promise(Never, Void) {
+  fun setCurrentPage (currentPage : String) : Promise(Never, Void) {
     next { currentPage = currentPage }
   }
 
-   fun setPerPage(perPage : String) : Promise(Never, Void) {
+  fun setPerPage (perPage : String) : Promise(Never, Void) {
     next { perPage = perPage }
   }
 
-    fun getWalletInfo : Promise(Never, Void) {
+  fun getWalletInfo : Promise(Never, Void) {
     sequence {
       response =
         Http.get(Network.baseUrl() + "/api/v1/wallet/" + address)
@@ -49,7 +49,7 @@ store TransactionStore {
     }
   }
 
-   fun getAllTransactions () : Promise(Never, Void) {
+  fun getAllTransactions : Promise(Never, Void) {
     sequence {
       response =
         Http.get(Network.baseUrl() + "/api/v1/transactions?page=" + currentPage + "&per_page=" + perPage + "&sort_field=time")
@@ -68,7 +68,7 @@ store TransactionStore {
     }
   }
 
-  fun getBlockTransactions () : Promise(Never, Void) {
+  fun getBlockTransactions : Promise(Never, Void) {
     sequence {
       response =
         Http.get(Network.baseUrl() + "/api/v1/block/" + blockId + "/transactions?page=" + currentPage + "&per_page=" + perPage + "&sort_field=time")
@@ -106,7 +106,7 @@ store TransactionStore {
     }
   }
 
-  fun getAddressTransactions () : Promise(Never, Void) {
+  fun getAddressTransactions : Promise(Never, Void) {
     sequence {
       response =
         Http.get(Network.baseUrl() + "/api/v1/address/" + address + "/transactions?page=" + currentPage + "&per_page=" + perPage + "&sort_field=time")
@@ -144,7 +144,7 @@ store TransactionStore {
     }
   }
 
-  fun getDomainTransactions () : Promise(Never, Void) {
+  fun getDomainTransactions : Promise(Never, Void) {
     sequence {
       response =
         Http.get(Network.baseUrl() + "/api/v1/domain/" + address + "/transactions?page=" + currentPage + "&per_page=" + perPage + "&sort_field=time")
@@ -181,7 +181,4 @@ store TransactionStore {
       next { transactionError = "Could not fetch transactions" }
     }
   }
-
-  
-
 }

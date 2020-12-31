@@ -24,20 +24,20 @@ routes {
   }
 
   /transactions {
-     sequence {
+    sequence {
       TransactionStore.setCurrentPage("0")
-      TransactionStore.setPerPage("10") 
+      TransactionStore.setPerPage("10")
       TransactionStore.getAllTransactions()
       Application.setPage("transactions")
-     }
+    }
   }
 
- /blocks/:blockId/transactions?page=:currentPage&perPage=:perPage (blockId : String, currentPage : String, perPage : String) {
+  /blocks/:blockId/transactions?page=:currentPage&perPage=:perPage (blockId : String, currentPage : String, perPage : String) {
     sequence {
       TransactionStore.setBlockId(blockId)
       TransactionStore.setCurrentPage(currentPage)
-      TransactionStore.setPerPage(perPage)  
-      TransactionStore.setSource(TransactionState::Block)  
+      TransactionStore.setPerPage(perPage)
+      TransactionStore.setSource(TransactionState::Block)
       TransactionStore.getBlockTransactions()
       Application.setPage("block_transactions")
     }
@@ -47,8 +47,8 @@ routes {
     sequence {
       TransactionStore.setBlockId(blockId)
       TransactionStore.setCurrentPage("0")
-      TransactionStore.setPerPage("10") 
-      TransactionStore.setSource(TransactionState::Block)  
+      TransactionStore.setPerPage("10")
+      TransactionStore.setSource(TransactionState::Block)
       TransactionStore.getBlockTransactions()
       Application.setPage("block_transactions")
     }
@@ -66,8 +66,8 @@ routes {
       TransactionStore.setAddress(address)
       TransactionStore.setCurrentPage(currentPage)
       TransactionStore.setPerPage(perPage)
-      TransactionStore.setSource(TransactionState::Address)   
-      TransactionStore.getAddressTransactions() 
+      TransactionStore.setSource(TransactionState::Address)
+      TransactionStore.getAddressTransactions()
       TransactionStore.getWalletInfo()
       Application.setPage("address")
     }
@@ -75,11 +75,11 @@ routes {
 
   /domain/:domain?page=:currentPage&perPage=:perPage (domain : String, currentPage : String, perPage : String) {
     sequence {
-     TransactionStore.setAddress(domain)
+      TransactionStore.setAddress(domain)
       TransactionStore.setCurrentPage(currentPage)
       TransactionStore.setPerPage(perPage)
-      TransactionStore.setSource(TransactionState::Domain)   
-      TransactionStore.getDomainTransactions() 
+      TransactionStore.setSource(TransactionState::Domain)
+      TransactionStore.getDomainTransactions()
       TransactionStore.getWalletInfo()
       Application.setPage("domain")
     }
@@ -89,9 +89,9 @@ routes {
     sequence {
       TransactionStore.setAddress(address)
       TransactionStore.setCurrentPage("0")
-      TransactionStore.setPerPage("10") 
-      TransactionStore.setSource(TransactionState::Address)   
-      TransactionStore.getAddressTransactions()  
+      TransactionStore.setPerPage("10")
+      TransactionStore.setSource(TransactionState::Address)
+      TransactionStore.getAddressTransactions()
       TransactionStore.getWalletInfo()
       Application.setPage("address")
     }
@@ -101,9 +101,9 @@ routes {
     sequence {
       TransactionStore.setAddress(domain)
       TransactionStore.setCurrentPage("0")
-      TransactionStore.setPerPage("10")  
-      TransactionStore.setSource(TransactionState::Domain)   
-      TransactionStore.getDomainTransactions() 
+      TransactionStore.setPerPage("10")
+      TransactionStore.setSource(TransactionState::Domain)
+      TransactionStore.getDomainTransactions()
       TransactionStore.getWalletInfo()
       Application.setPage("domain")
     }

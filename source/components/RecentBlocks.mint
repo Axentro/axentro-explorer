@@ -53,11 +53,16 @@ component RecentBlocks {
       </a>
 
       <div>
-      <div>
-        <b><{ calculateTimeAgo(row) }></b>
-        </div>
         <div>
-        <i><{ renderDate(row) }></i>
+          <b>
+            <{ calculateTimeAgo(row) }>
+          </b>
+        </div>
+
+        <div>
+          <i>
+            <{ renderDate(row) }>
+          </i>
         </div>
       </div>
     </div>

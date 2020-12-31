@@ -1,6 +1,5 @@
 component BlockTransactions {
-
-   connect TransactionStore exposing { blockId }
+  connect TransactionStore exposing { blockId }
 
   fun render : Html {
     <Layout
@@ -62,7 +61,7 @@ component BlockTransactions {
 
         <div class="row row-deck">
           <div class="col-lg-12 col-12">
-            <AllTransactions />
+            <AllTransactions/>
           </div>
         </div>
       </div>

@@ -44,24 +44,33 @@ component RecentTransactions {
       <a href={"/transactions/" + transactionId}>
         <{ UiHelper.capLength(transactionId, 24) }>
       </a>
+
       <div>
-      <a href={"/blocks/" + blockId}>
-          <i><{ "Block " + blockId }></i>
-      </a>
+        <a href={"/blocks/" + blockId}>
+          <i>
+            <{ "Block " + blockId }>
+          </i>
+        </a>
       </div>
 
       <div>
-      <div>
-        <b><{ calculateTimeAgo(row) }></b>
-        </div>
         <div>
-        <i><{ renderDate(row) }></i>
+          <b>
+            <{ calculateTimeAgo(row) }>
+          </b>
+        </div>
+
+        <div>
+          <i>
+            <{ renderDate(row) }>
+          </i>
         </div>
       </div>
     </div>
   } where {
     transactionId =
       row.transaction.id
+
     blockId =
       Number.toString(row.blockId)
   }
@@ -70,7 +79,7 @@ component RecentTransactions {
     UiHelper.timeAgo(row.transaction.timestamp)
   }
 
-   fun renderDate (row : TransactionsResponse) : String {
+  fun renderDate (row : TransactionsResponse) : String {
     UiHelper.shortDateFrom(row.transaction.timestamp)
   }
 
