@@ -233,7 +233,7 @@ component AllTransactions {
       </td>
 
       <td class="text-muted">
-        <{ renderTokenAmounts(row) }>
+        <{ renderAmount(row) }>
       </td>
 
       <td class="text-muted">
