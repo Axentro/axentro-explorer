@@ -12,7 +12,7 @@ component RecentBlocks {
       </td>
 
       <td class="text-muted">
-        <{ renderAmount(row) }>
+        <{ renderTokenAmounts(row) }>
       </td>
     </tr>
   }
@@ -43,7 +43,48 @@ component RecentBlocks {
         row.transactions
         |> Array.flatMap((t : ApiTransaction) { t.recipients })
         |> Array.map((r : ApiRecipient) { r.amount })
-        |> Array.sum)
+        |> Array.sum)     
+  }
+
+  fun renderTokenAmounts(row : ApiBlock) : Array(Html) {
+      tokenAmounts
+      |> Array.map(renderTokenAmount)
+  } where {
+    uniqueTokens = Set.fromArray(row.transactions |> Array.map(.token)) |> Set.toArray()
+    tokenAmounts = uniqueTokens 
+                   |> Array.map((token : String){
+                      { token = token, 
+                       amount =  UiHelper.displayAmount(row.transactions 
+                       |> Array.select((t : ApiTransaction){ t.token == token }) 
+                       |> Array.flatMap((t : ApiTransaction) { t.recipients })
+                       |> Array.map((r : ApiRecipient) { r.amount })
+                       |> Array.sum)
+                     }
+                      })
+  }
+
+  fun renderTokenAmount(tokenAmount : TokenAmount) : Html {
+    if (tokenAmount.token == "AXNT"){
+      <div>
+       <h6 class="tag tag-blue">
+      <{ tokenAmount.amount }>
+
+      <span class="tag-addon tag-azure">
+        "  AXNT"
+      </span>
+    </h6>
+    </div>
+    } else {
+      <div>
+      <h6 class="tag tag-lime">
+      <{ tokenAmount.amount }>
+
+      <span class="tag-addon tag-purple">
+        <{ tokenAmount.token }>
+      </span>
+    </h6>
+    </div>
+    }
   }
 
   fun renderBlockId (row : ApiBlock) : Html {
@@ -64,11 +105,26 @@ component RecentBlocks {
             <{ renderDate(row) }>
           </i>
         </div>
+        <div>
+        <i>
+        <{ renderDifficulty(row) }>
+        </i>
+        </div>
       </div>
     </div>
   } where {
     blockId =
       Number.toString(row.index)
+  }
+
+  fun renderDifficulty(row : ApiBlock) : Html {
+    if (row.kind == "SLOW"){
+      row.difficulty 
+      |> Maybe.map((d : Number) { <div>"Difficulty: " <b> <{Number.toString(d) }> </b></div> })
+      |> Maybe.withDefault(<span></span>)
+    } else {
+      <span></span>
+    }
   }
 
   fun renderDate (row : ApiBlock) : String {

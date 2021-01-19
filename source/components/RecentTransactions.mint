@@ -143,6 +143,41 @@ component RecentTransactions {
         |> Array.sum)
   }
 
+   fun renderTokenAmounts(row : TransactionsResponse) : Html {
+      renderTokenAmount(tokenAmount)
+  } where {
+    amount =
+      UiHelper.displayAmount(
+        row.transaction.recipients
+        |> Array.map((r : ApiRecipient) { r.amount })
+        |> Array.sum)
+    tokenAmount = { token = row.transaction.token, amount = amount}
+  }
+
+  fun renderTokenAmount(tokenAmount : TokenAmount) : Html {
+    if (tokenAmount.token == "AXNT"){
+      <div>
+       <h6 class="tag tag-blue">
+      <{ tokenAmount.amount }>
+
+      <span class="tag-addon tag-azure">
+        "  AXNT"
+      </span>
+    </h6>
+    </div>
+    } else {
+      <div>
+      <h6 class="tag tag-lime">
+      <{ tokenAmount.amount }>
+
+      <span class="tag-addon tag-purple">
+        <{ tokenAmount.token }>
+      </span>
+    </h6>
+    </div>
+    }
+  }
+
   fun renderBodyRow (row : TransactionsResponse) : Html {
     <tr>
       <td class="text-muted">
@@ -154,7 +189,7 @@ component RecentTransactions {
       </td>
 
       <td class="text-muted">
-        <{ renderAmount(row) }>
+        <{ renderTokenAmounts(row) }>
       </td>
     </tr>
   }

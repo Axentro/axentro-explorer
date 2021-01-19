@@ -181,3 +181,14 @@ record OnlineNode {
   address : String,
   url : String
 }
+
+/* Tokens */
+record TokenRecipients {
+  token : String,
+  recipients : Array(ApiRecipient)
+}
+
+record TokenAmount {
+  amount : String,
+  token : String
+}

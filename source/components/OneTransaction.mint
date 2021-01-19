@@ -16,13 +16,13 @@ component OneTransaction {
 
       <tbody>
         for (r of row.transaction.recipients) {
-          renderRecipientData(r)
+          renderRecipientData(r, row.transaction.token)
         }
       </tbody>
     </table>
   }
 
-  fun renderRecipientData (r : ApiRecipient) : Html {
+  fun renderRecipientData (r : ApiRecipient, token : String) : Html {
     <tr>
       <td>
         <div>
@@ -33,7 +33,7 @@ component OneTransaction {
       </td>
 
       <td>
-        <{ renderAmount(r.amount) }>
+        <{ renderAmount(r.amount, token) }>
       </td>
     </tr>
   }
@@ -53,14 +53,14 @@ component OneTransaction {
 
         <tbody>
           for (r of row.transaction.senders) {
-            renderSenderData(r)
+            renderSenderData(r, row.transaction.token)
           }
         </tbody>
       </table>
     }
   }
 
-  fun renderSenderData (s : ApiSender) : Html {
+  fun renderSenderData (s : ApiSender, token : String) : Html {
     <tr>
       <td>
         <div>
@@ -71,11 +71,11 @@ component OneTransaction {
       </td>
 
       <td>
-        <{ renderAmount(s.amount) }>
+        <{ renderAmount(s.amount, token) }>
       </td>
 
       <td>
-        <{ renderAmount(s.fee) }>
+        <{ renderAmount(s.fee, "AXNT") }>
       </td>
 
       <td>
@@ -88,17 +88,35 @@ component OneTransaction {
     </tr>
   }
 
-  fun renderAmount (rawAmount : Number) : Html {
-    <h6 class="tag tag-blue">
-      <{ amount }>
+  fun renderAmount (rawAmount : Number, token : String) : Html {
+    renderTokenAmount({token = token, amount = amount})
+  } where {
+    amount =
+      UiHelper.displayAmount(rawAmount)
+  }
+
+    fun renderTokenAmount(tokenAmount : TokenAmount) : Html {
+    if (tokenAmount.token == "AXNT"){
+      <div>
+       <h6 class="tag tag-blue">
+      <{ tokenAmount.amount }>
 
       <span class="tag-addon tag-azure">
         "  AXNT"
       </span>
     </h6>
-  } where {
-    amount =
-      UiHelper.displayAmount(rawAmount)
+    </div>
+    } else {
+      <div>
+      <h6 class="tag tag-lime">
+      <{ tokenAmount.amount }>
+
+      <span class="tag-addon tag-purple">
+        <{ tokenAmount.token }>
+      </span>
+    </h6>
+    </div>
+    }
   }
 
   fun renderTransactionKind (row : ApiTransactionResponse) : Html {
