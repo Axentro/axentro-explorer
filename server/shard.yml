@@ -2,7 +2,7 @@ name: server
 version: 0.1.0
 
 authors:
-  - your-name-here <your-email-here>
+  - kingsley <kingsley@axentro.io>
 
 targets:
   server:
@@ -12,6 +12,6 @@ dependencies:
   kemal:
     github: kemalcr/kemal
     
-crystal: 0.35.1
+crystal: 0.36.1
 
 license: MIT
