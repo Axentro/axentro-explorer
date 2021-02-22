@@ -90,6 +90,12 @@ component AllTransactions {
     UiHelper.timeAgo(row.transaction.timestamp)
   }
 
+  fun renderConfirmations(row : TransactionsResponse) : Html {
+    <div>
+    <i><{ "confirmations: " + (row.confirmations |> Number.toString) }></i>
+    </div>
+  }
+
   fun renderDate (row : TransactionsResponse) : String {
     UiHelper.shortDateFrom(row.transaction.timestamp)
   }
@@ -200,6 +206,7 @@ component AllTransactions {
     <tr>
       <td class="text-muted">
         <{ renderTransactionId(row) }>
+        <{ renderConfirmations(row)}>
       </td>
 
       <td class="text-muted">

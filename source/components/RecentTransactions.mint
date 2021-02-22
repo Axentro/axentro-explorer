@@ -109,6 +109,10 @@ component RecentTransactions {
             <{ renderDate(row) }>
           </i>
         </div>
+
+        <div>
+        <{ renderConfirmations(row) }>
+        </div>
       </div>
     </div>
   } where {
@@ -152,6 +156,12 @@ component RecentTransactions {
         |> Array.map((r : ApiRecipient) { r.amount })
         |> Array.sum)
     tokenAmount = { token = row.transaction.token, amount = amount}
+  }
+
+    fun renderConfirmations(row : TransactionsResponse) : Html {
+    <div>
+    <i><{ "confirmations: " + (row.confirmations |> Number.toString) }></i>
+    </div>
   }
 
   fun renderTokenAmount(tokenAmount : TokenAmount) : Html {

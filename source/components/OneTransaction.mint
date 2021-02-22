@@ -193,6 +193,16 @@ component OneTransaction {
 
             <tr class="bold border-bottom">
               <th class="border-bottom-0">
+                "Confirmations"
+              </th>
+
+              <td>
+                <{ transaction.confirmations |> Number.toString }>
+              </td>
+            </tr>
+
+            <tr class="bold border-bottom">
+              <th class="border-bottom-0">
                 "Action"
               </th>
 
