@@ -53,7 +53,7 @@ component Pagination {
       |> Maybe.withDefault(1)
 
     totalCountNumber =
-      UiHelper.roundDown(paginationData.totalCount / selectedPerPageNumber)
+      UiHelper.roundDown(Math.max(1, paginationData.totalCount / selectedPerPageNumber))
 
     total =
       Number.toString(totalCountNumber)
@@ -95,7 +95,7 @@ component Pagination {
       |> Maybe.withDefault(1)
 
     totalCountNumber =
-      UiHelper.roundDown(paginationData.totalCount / selectedPerPageNumber)
+      UiHelper.roundDown(Math.max(1, paginationData.totalCount / selectedPerPageNumber))
 
     total =
       Number.toString(totalCountNumber)

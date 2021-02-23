@@ -37,7 +37,7 @@ routes {
 
   /blocks/:blockId/transactions (blockId : String) {
     sequence {
-      TransactionStore.initBlockTransactions(blockId, "0", "10")
+      TransactionStore.initBlockTransactions(blockId, "1", "10")
       Application.setPage("block_transactions")
     }
   }
@@ -65,14 +65,14 @@ routes {
 
   /address/:address (address : String) {
     sequence {
-      TransactionStore.initAddressTransactions(address, "0", "10")
+      TransactionStore.initAddressTransactions(address, "1", "10")
       Application.setPage("address")
     }
   }
 
   /domain/:domain (domain : String) {
     sequence {
-      TransactionStore.initDomainTransactions(domain, "0", "10")
+      TransactionStore.initDomainTransactions(domain, "1", "10")
       Application.setPage("domain")
     }
   }
