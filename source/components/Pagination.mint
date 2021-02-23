@@ -50,7 +50,7 @@ component Pagination {
 
     selectedPerPageNumber =
       Number.fromString(selectedPerPage)
-      |> Maybe.withDefault(0)
+      |> Maybe.withDefault(1)
 
     totalCountNumber =
       UiHelper.roundDown(paginationData.totalCount / selectedPerPageNumber)
@@ -92,7 +92,7 @@ component Pagination {
 
     selectedPerPageNumber =
       Number.fromString(selectedPerPage)
-      |> Maybe.withDefault(0)
+      |> Maybe.withDefault(1)
 
     totalCountNumber =
       UiHelper.roundDown(paginationData.totalCount / selectedPerPageNumber)
@@ -102,7 +102,7 @@ component Pagination {
   }
 
   fun showPaginationPrev (pageNumber : Number) : Html {
-    if (pageNumber <= 0) {
+    if (pageNumber <= 1) {
       <button
         disabled={true}
         class="btn btn-outline-primary disabled">
