@@ -1,5 +1,5 @@
 store BlockStore {
-  state currentPage : String = "0"
+  state currentPage : String = "1"
   state perPage : String = "10"
   state blockError : String = ""
   state blocks : Maybe(BlocksResponse) = Maybe.nothing()

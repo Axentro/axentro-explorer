@@ -2,7 +2,7 @@ store TransactionStore {
   state blockId : String = ""
   state transactionId : String = ""
   state address : String = ""
-  state currentPage : String = "0"
+  state currentPage : String = "1"
   state perPage : String = "10"
   state walletInfo : Maybe(ApiAddressInfo) = Maybe.nothing()
   state walletError : String = ""

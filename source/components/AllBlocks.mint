@@ -164,9 +164,9 @@ component AllBlocks {
     currentPageValue =
       Number.toString(
         Math.max(
-          0,
+          1,
           (Number.fromString(currentPage)
-          |> Maybe.withDefault(0)) - 1))
+          |> Maybe.withDefault(1)) - 1))
   }
 
   fun onNextPage (event : Html.Event) {
@@ -176,7 +176,7 @@ component AllBlocks {
       Number.toString(
         (currentPage
         |> Number.fromString
-        |> Maybe.withDefault(0)) + 1)
+        |> Maybe.withDefault(1)) + 1)
   }
 
   fun render : Html {

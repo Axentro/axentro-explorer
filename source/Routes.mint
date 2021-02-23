@@ -23,7 +23,7 @@ routes {
 
   /transactions {
     sequence {
-      TransactionStore.initAllTransactions("0", "10")
+      TransactionStore.initAllTransactions("1", "10")
       Application.setPage("transactions")
     }
   }
@@ -88,7 +88,7 @@ routes {
 
   /blocks {
     sequence {
-      BlockStore.setCurrentPage("0")
+      BlockStore.setCurrentPage("1")
       BlockStore.setPerPage("10")
       BlockStore.getBlocks()
       Application.setPage("blocks")
